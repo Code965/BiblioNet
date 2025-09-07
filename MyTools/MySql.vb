@@ -35,8 +35,8 @@ Namespace Database
         End Function
 
         ' WHERE
-        Public Function Where(condition As String) As MySql
-            _Where = "WHERE " & condition
+        Public Function Where(columnOne As String, operand As String, value As String) As MySql
+            _Where = "WHERE " & columnOne & operand & value
             Return Me
         End Function
 
@@ -78,25 +78,25 @@ Namespace Database
         End Function
 
         ' Restituisce lista di liste
-        Public Function ToList() As List(Of List(Of Object))
-            Dim sql = Build()
-            Using conn As New MySqlConnection(connStr)
-                Using cmd As New MySqlCommand(sql, conn)
-                    conn.Open()
-                    Dim result As New List(Of List(Of Object))()
-                    Using reader = cmd.ExecuteReader()
-                        While reader.Read()
-                            Dim row As New List(Of Object)()
-                            For i As Integer = 0 To reader.FieldCount - 1
-                                row.Add(reader.GetValue(i))
-                            Next
-                            result.Add(row)
-                        End While
-                    End Using
-                    Return result
-                End Using
-            End Using
-        End Function
+        'Public Function ToList() As List(Of List(Of Object))
+        '    Dim sql = Build()
+        '    Using conn As New MySqlConnection(connStr)
+        '        Using cmd As New MySqlCommand(sql, conn)
+        '            conn.Open()
+        '            Dim result As New List(Of List(Of Object))()
+        '            Using reader = cmd.ExecuteReader()
+        '                While reader.Read()
+        '                    Dim row As New List(Of Object)()
+        '                    For i As Integer = 0 To reader.FieldCount - 1
+        '                        row.Add(reader.GetValue(i))
+        '                    Next
+        '                    result.Add(row)
+        '                End While
+        '            End Using
+        '            Return result
+        '        End Using
+        '    End Using
+        'End Function
 
         ' Esegue query non di selezione (INSERT, UPDATE, DELETE)
         Public Function ExecuteNonQuery() As Integer
