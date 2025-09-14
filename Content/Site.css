@@ -20,3 +20,87 @@ textarea {
         padding: 0;
     }
 }
+
+
+/*CSS SITO*/
+
+
+/*LOGO*/
+#Logo{
+    background-color: var(--primary-900) !important;
+    color:white;
+}
+
+#logo-span {
+    color: var(--muted-600);
+}
+
+/*LISTA DI NAVIGAZIONE UL */
+
+#nav-list {
+    background-color: var(--primary-700);
+    height:1280px;
+}
+
+#nav-list li {
+   
+    color: white;
+    line-height: 60px;
+}
+
+    #nav-list li a {
+        margin-left: 20px;
+    }
+
+/*BANNER*/
+
+#banner {
+    background-color: var(--muted-400);
+    border-radius: 5px;
+    color: var(--text-high);
+    height: 150px;
+    line-height: 150px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+
+#on-loan {
+    background-color: var(--muted-400);
+    border-radius: 5px;
+    color: var(--text-high);
+    height: 150px;
+    line-height: 150px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+:root {
+    /* Palette principale (cool teal / navy) */
+    --primary-900: #082032; /* navy molto scuro - elementi principali */
+    --primary-700: #0F4C6A; /* navy/teal scuro - header, sidebar */
+    --primary-500: #178FA3; /* teal primario - bottoni, link */
+    --primary-300: #6FD1E6; /* teal chiaro - hover / evidenze */
+    /* Accento caldo (corallo) */
+    --accent-600: #FF6B4A; /* corallo/arancione - call to action */
+    --accent-400: #FF9575; /* accento soft */
+    /* Neutri / superfici */
+    --bg: #F6F8FA; /* sfondo generale */
+    --surface: #FFFFFF; /* card / pannelli */
+    --muted-600: #9AA7B2; /* testo secondario / placeholder */
+    --muted-400: #D7E1E6; /* bordi leggeri / separatori */
+    /* Testo */
+    --text-high: #0B1A22; /* titolo / testo principale */
+    --text-medium: #2E4650; /* testo normale */
+    --text-low: #6B8790; /* testo secondario */
+    /* Stati */
+    --success: #27AE60; /* verde */
+    --warning: #F2C94C; /* giallo */
+    --danger: #E46060; /* rosso */
+    /* Effetti / ombre */
+    --glass: rgba(8,32,50,0.06);
+    --shadow-sm: 0 1px 4px rgba(8,32,50,0.06);
+    --shadow-lg: 0 8px 24px rgba(8,32,50,0.12);
+}

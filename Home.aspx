@@ -1,41 +1,47 @@
 ﻿<%@ Page Title="About" Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Home.aspx.vb" Inherits="BiblioNet.Home" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-   
+
     <style>
+        body{
+            background-color:var(--bg);
+        }
 
-        #catalogo{
-        width: 600px;
- background-color:chartreuse;
-}
+        #catalogo {
+            width: 600px;
+            background-color: chartreuse;
+        }
 
-                #vetrina{
-        width: 600px;
- background-color:chartreuse;
-}
-
+        #vetrina {
+            width: 600px;
+            background-color: chartreuse;
+        }
     </style>
 
-
-    <div class="d-flex w-100 gap-4 ">
-
-        <div class="" id="catalogo" >
+        <link href="/Content/site.css" rel="stylesheet" />
 
 
-            Catalogo
+
+    <div class="d-flex w-100 p-2 gap-4 flex-column ">
+
+        <div id="banner" class="">
+
+
+            ciao
 
         </div>
 
-        <div class="" id="vetrina">
+           <div id="on-loan" class="">
 
-            Vetrina
-        </div>
 
+       In prestito
+
+   </div>
+
+    <asp:GridView ID="GrdBook" AutoGenerateColumns="true" runat="server"></asp:GridView>
 
     </div>
 
-    <h2>Libri in evidenza</h2>
-            <asp:GridView ID="GrdBook" AutoGenerateColumns="true" runat="server"></asp:GridView>
 
 
     <div>
