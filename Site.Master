@@ -78,7 +78,8 @@
 
                 <div >
 
-                    <ul id="nav-list" class="d-flex flex-column  ">
+                    <ul id="nav-list" class="dropdown-menu">
+
                         <li><a href="Home.aspx">Dashboard</a></li>
                         <li>
                             <a href="Prestiti.aspx">Prestiti</a></li>
