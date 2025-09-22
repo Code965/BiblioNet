@@ -48,34 +48,43 @@ textarea {
     line-height: 60px;
 }
 
+    #nav-list li:hover {
+        background-color: var(--primary-900);
+        color: white !important;
+    }
+
     #nav-list li a {
         margin-left: 20px;
+        color: var(--muted-600);
     }
+
+    #nav-list li a:hover {
+        color: white;
+    }
+
+
+
 
 /*BANNER*/
 
 #banner {
     background-color: var(--muted-400);
     border-radius: 5px;
-    color: var(--text-high);
-    height: 150px;
-    line-height: 150px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
+    height: 200px;
+    width: 95%;
+    border: 1px solid var(--glass);
 }
 
 
 #on-loan {
-    background-color: var(--muted-400);
     border-radius: 5px;
-    color: var(--text-high);
-    height: 150px;
-    line-height: 150px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: bold;
+    height: auto;
+    width: 95%;
+    border: 1px solid var(--glass);
 }
+
+
+
 
 :root {
     /* Palette principale (cool teal / navy) */
