@@ -9,10 +9,16 @@ Imports MySql.Data.MySqlClient
 Namespace Database
     Public Class MySql
 
+
+        'FUNZIONAMENTO
+        '1) Creo delle prorietà per ogni parte della query che tengono dentro la stringa
+        '2) Creo dei metodi che una volta chiamati settano le proprietà - incapsulamento
+        '3) Creo un metodo Build che mi crea la query finale
+
         ' Connection string dal Web.config
         Private connStr As String = ConfigurationManager.ConnectionStrings("biblionet").ConnectionString
 
-        ' Parti della query
+        ' Attributi della classe MySql
         Public Property _Select As String
         Public Property _From As String
         Public Property _Insert As String
@@ -21,6 +27,9 @@ Namespace Database
         Public Property _Where As String
         Public Property _OrderBy As String
         Public Property _GroupBy As String
+
+
+        'METODI
 
         ' SELECT
         Public Function [Select](columns As String) As MySql
@@ -52,17 +61,31 @@ Namespace Database
             Return Me
         End Function
 
+        Public Function InsertInto(table As String, columns As String, values As String) As MySql
+            _Insert = "INSERT INTO " & table & " ( " & columns & ") VALUES (" & values & ")"
+            Return Me
+        End Function
+
         ' SQL finale
         Public Function Build() As String
             Dim parts As New List(Of String)
+
+            ' INSERT
+            If Not String.IsNullOrEmpty(_Insert) Then
+                parts.Add(_Insert)
+            End If
+
+            'Aggiungo i metodi alla lista 
             If Not String.IsNullOrEmpty(_Select) Then parts.Add(_Select)
             If Not String.IsNullOrEmpty(_From) Then parts.Add(_From)
             If Not String.IsNullOrEmpty(_Where) Then parts.Add(_Where)
             If Not String.IsNullOrEmpty(_OrderBy) Then parts.Add(_OrderBy)
             If Not String.IsNullOrEmpty(_GroupBy) Then parts.Add(_GroupBy)
 
+            'Mi crea la query finale
             Return String.Join(" ", parts)
         End Function
+
 
         ' Restituisce DataTable
         Public Function ToDataTable() As DataTable
@@ -77,28 +100,6 @@ Namespace Database
             End Using
         End Function
 
-        ' Restituisce lista di liste
-        'Public Function ToList() As List(Of List(Of Object))
-        '    Dim sql = Build()
-        '    Using conn As New MySqlConnection(connStr)
-        '        Using cmd As New MySqlCommand(sql, conn)
-        '            conn.Open()
-        '            Dim result As New List(Of List(Of Object))()
-        '            Using reader = cmd.ExecuteReader()
-        '                While reader.Read()
-        '                    Dim row As New List(Of Object)()
-        '                    For i As Integer = 0 To reader.FieldCount - 1
-        '                        row.Add(reader.GetValue(i))
-        '                    Next
-        '                    result.Add(row)
-        '                End While
-        '            End Using
-        '            Return result
-        '        End Using
-        '    End Using
-        'End Function
-
-        ' Esegue query non di selezione (INSERT, UPDATE, DELETE)
         Public Function ExecuteNonQuery() As Integer
             Dim sql = Build()
             Using conn As New MySqlConnection(connStr)

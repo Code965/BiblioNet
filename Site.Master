@@ -79,7 +79,7 @@
                 <div >
 
                     <ul id="nav-list" class="d-flex flex-column  ">
-                        <li><a href="Home.aspx">Dashboard</a></li>
+                        <li><a href="Default.aspx">Dashboard</a></li>
                         <li>
                             <a href="Prestiti.aspx">Scambio</a></li>
                         <li>
