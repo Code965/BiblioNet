@@ -82,10 +82,12 @@
 
                         <li><a href="Home.aspx">Dashboard</a></li>
                         <li>
-                            <a href="Prestiti.aspx">Prestiti</a></li>
+                            <a href="Prestiti.aspx">Scambio</a></li>
                         <li>
                         <a href="Catalogo.aspx">Catalogo</a>
                         </li>
+
+
                     </ul>
 
 
