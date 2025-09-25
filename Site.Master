@@ -76,9 +76,9 @@
                     BIBLIONET <span id="logo-span">Library</span>
                 </div>
 
-                <div >
+                <div>
 
-                    <ul id="nav-list" class="dropdown-menu">
+                    <ul id="nav-list">
 
                         <li><a href="Home.aspx">Dashboard</a></li>
                         <li>
@@ -120,9 +120,9 @@
 
                         </div>
 
-                        <div class="collapse navbar-collapse d-flex " id="navbarNav">
+                        <div class="collapse navbar-collapse d-flex " id="navbarNav" style="width:15%">
                             <div class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btnProfilo" >
 
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
@@ -130,12 +130,22 @@
                                     </svg>
                                     nome
                                 </button>
-                                <ul class="dropdown-menu" style="">
+                                <ul class="dropdown-menu" id="drpProfilo">
                                     <li><a class="dropdown-item" href="#">Action</a></li>
                                     <li><a class="dropdown-item" href="#">Another action</a></li>
                                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                                 </ul>
                             </div>
+
+                            <script>
+                                $("#btnProfilo,#drpProfilo").on('mouseleave', function() {                                 
+                                        $("#drpProfilo").removeClass('show');                                    
+                                });                               
+
+                                $("#btnProfilo, #drpProfilo").on('mouseenter', function() {                                    
+                                        $("#drpProfilo").addClass('show');                                       
+                                });                              
+                            </script>
                         </div>
                     </div>
                 </nav>
