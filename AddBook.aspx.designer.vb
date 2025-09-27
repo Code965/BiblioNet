@@ -11,32 +11,41 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class _Default
+Partial Public Class AddBook
 
     '''<summary>
-    '''Controllo BtnMonthBook.
+    '''Controllo form1.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnMonthBook As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents form1 As Global.System.Web.UI.HtmlControls.HtmlForm
 
     '''<summary>
-    '''Controllo BtnOpenDialogBook.
+    '''Controllo txtTitle.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnOpenDialogBook As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents txtTitle As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo GrdBook.
+    '''Controllo txtAuthor.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents GrdBook As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents txtAuthor As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Controllo btnSave.
+    '''</summary>
+    '''<remarks>
+    '''Campo generato automaticamente.
+    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+    '''</remarks>
+    Protected WithEvents btnSave As Global.System.Web.UI.WebControls.Button
 End Class

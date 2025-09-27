@@ -24,19 +24,19 @@ Public Class _Default
 
 
     Protected Sub BtnOpenDialogBook_Click(sender As Object, e As EventArgs) Handles BtnOpenDialogBook.Click
-        JsScript.JsHelper.AddJScript("openDialog('#dialog');")
+        JsScript.JsHelper.AddJScript("openDialog(""#dialog"", ""/AddBook.aspx"");")
     End Sub
 
 
-    Protected Sub BtnAddBook_Click(sender As Object, e As EventArgs) Handles BtnAddBook.Click
-        Dim title As String = TxtTitle.Text
-        Dim author As String = TxtAutore.Text
+    'Protected Sub BtnAddBook_Click(sender As Object, e As EventArgs) Handles BtnAddBook.Click
+    '    'Dim title As String = TxtTitle.Text
+    '    'Dim author As String = TxtAutore.Text
 
-        Dim q As MyTools.Database.MySql = New MyTools.Database.MySql()
-        q.InsertInto("book", "nameBook, authorBook", "'" & title & "', '" & author & "'").ExecuteNonQuery()
+    '    'Dim q As MyTools.Database.MySql = New MyTools.Database.MySql()
+    '    'q.InsertInto("book", "nameBook, authorBook", "'" & title & "', '" & author & "'").ExecuteNonQuery()
 
-        ' Chiudi il dialog dopo l'inserimento
-        JsScript.JsHelper.AddJScript("$('#dialog').dialog('close'); location.reload();")
-    End Sub
+    '    '' Chiudi il dialog dopo l'inserimento
+    '    'JsScript.JsHelper.AddJScript("openDialog(""#dialog"", ""AddBook.aspx"");")
+    'End Sub
 
 End Class

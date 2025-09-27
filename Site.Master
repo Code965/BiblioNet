@@ -142,9 +142,6 @@
                 <asp:ContentPlaceHolder ID="MainContent" runat="server">
 
 
-                    <iframe id="mainFrame" name="mainFrame" src="Home.aspx" style="width: 300%; height: 900px; border: none;"></iframe>
-
-
                 </asp:ContentPlaceHolder>
                 <footer>
                     <p>&copy; <%: DateTime.Now.Year %> - Domenico Giannone</p>

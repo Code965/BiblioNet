@@ -3,9 +3,16 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
+    <link href="/Content/site.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+
     <style>
-        body{
-            background-color:var(--bg);
+        body {
+            background-color: var(--bg);
         }
 
         #catalogo {
@@ -42,12 +49,33 @@
 
     </style>
 
-    <link href="/Content/site.css" rel="stylesheet" />
+    <script>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+        //Ho un unica funzione che si occupa di aprire il dialog passato
+        function openDialog(dialogSelector, pageUrl) {
 
+
+            var $dialog = $(dialogSelector);
+            $dialog.empty(); // svuota tutto
+
+
+            $(dialogSelector).html('<iframe src="' + pageUrl + '" style="border:0;width:100%;height:100%;"></iframe>');
+
+            $(dialogSelector).dialog({
+                modal: true,
+                title: "Aggiungi Libro",
+                width: 1200,
+                height: 900,
+                className: "dialog-class",
+                buttons: {
+                    "Chiudi": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        }
+
+    </script>
 
 
     <div class="d-flex w-100 p-2 gap-4 flex-column align-items-center ">
@@ -100,11 +128,10 @@
                     <div class=" text-muted line " style="line-height: 10px;">
 
                         <%-- BOTTONE CHE APRE UN DIALOG PER INSERIRE NUOVI LIBRI --%>
-                        <asp:Button type="button" ID="BtnAddBook" CssClass="btn btn-primary vertical-btn d-flex align-items-center" Text="+" runat="server"></asp:Button>
+                        <asp:Button type="button" ID="BtnOpenDialogBook" Width="50" CssClass="btn btn-primary vertical-btn d-flex align-items-center" Text="+" runat="server"/>
+                        <div id="dialog"></div>
 
-                        <div id="dialog" title="Basic dialog">
-                            <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-                        </div>
+                     
 
                     </div>
                 </div>
