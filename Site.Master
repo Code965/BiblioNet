@@ -79,7 +79,7 @@
                 <div >
 
                     <ul id="nav-list" class="d-flex flex-column  ">
-                        <li><a href="Home.aspx">Dashboard</a></li>
+                        <li><a href="Default.aspx">Dashboard</a></li>
                         <li>
                             <a href="Prestiti.aspx">Scambio</a></li>
                         <li>
@@ -140,9 +140,6 @@
                 </nav>
 
                 <asp:ContentPlaceHolder ID="MainContent" runat="server">
-
-
-                    <iframe id="mainFrame" name="mainFrame" src="Home.aspx" style="width: 300%; height: 900px; border: none;"></iframe>
 
 
                 </asp:ContentPlaceHolder>

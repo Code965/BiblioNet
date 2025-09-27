@@ -12,4 +12,31 @@ Option Explicit On
 
 
 Partial Public Class _Default
+
+    '''<summary>
+    '''Controllo BtnMonthBook.
+    '''</summary>
+    '''<remarks>
+    '''Campo generato automaticamente.
+    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+    '''</remarks>
+    Protected WithEvents BtnMonthBook As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Controllo BtnOpenDialogBook.
+    '''</summary>
+    '''<remarks>
+    '''Campo generato automaticamente.
+    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+    '''</remarks>
+    Protected WithEvents BtnOpenDialogBook As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Controllo GrdBook.
+    '''</summary>
+    '''<remarks>
+    '''Campo generato automaticamente.
+    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+    '''</remarks>
+    Protected WithEvents GrdBook As Global.System.Web.UI.WebControls.GridView
 End Class
