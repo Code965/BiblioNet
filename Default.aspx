@@ -9,20 +9,11 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 
+        <link href="/Content/site.css" rel="stylesheet" />
 
     <style>
         body {
             background-color: var(--bg);
-        }
-
-        #catalogo {
-            width: 600px;
-            background-color: chartreuse;
-        }
-
-        #vetrina {
-            width: 600px;
-            background-color: chartreuse;
         }
 
         .BtnFindMonthBook {
@@ -47,33 +38,47 @@
         }
 
 
+        .ui-dialog-buttonpane {
+            border:none;
+        }
+
     </style>
 
     <script>
+       
+function openDialog(dialogSelector, pageUrl, title, width, height) {
 
-        //Ho un unica funzione che si occupa di aprire il dialog passato
-        function openDialog(dialogSelector, pageUrl) {
+    var $dialog = $(dialogSelector);
+
+    // se il div non esiste, lo creo e lo aggiungo al body
+    if ($dialog.length === 0) {
+        $dialog = $('<div>', { id: dialogSelector.replace('#', '') });
+        $('body').append($dialog);
+    }
 
 
-            var $dialog = $(dialogSelector);
-            $dialog.empty(); // svuota tutto
+    // pulisco il contenuto
+    $dialog.empty();
 
+    // inserisco l'iframe
+    $dialog.html('<iframe src="' + pageUrl + '" style="border:0;width:100%;height:100%;"></iframe>');
 
-            $(dialogSelector).html('<iframe src="' + pageUrl + '" style="border:0;width:100%;height:100%;"></iframe>');
-
-            $(dialogSelector).dialog({
-                modal: true,
-                title: "Aggiungi Libro",
-                width: 1200,
-                height: 900,
-                className: "dialog-class",
-                buttons: {
-                    "Chiudi": function () {
-                        $(this).dialog("close");
-                    }
-                }
-            });
+    // apro il dialog
+    $dialog.dialog({
+        modal: true,
+        title: title,
+        width: width,
+        height: height,
+        dialogClass: "dialog-open",
+        buttons: {
+            "Chiudi": function () {
+                $(this).dialog("close");
+            }
         }
+    });
+
+
+}
 
     </script>
 
@@ -88,7 +93,6 @@
 
             <div class="d-flex flex-column">
                 <h1>Black History Month</h1>
-                <p>njnjnjnj</p>
 
                 <div>
                     <asp:Button ID="BtnMonthBook" Text="Find Out More" CssClass="btn btn-default BtnFindMonthBook" runat="server" />
@@ -129,9 +133,7 @@
 
                         <%-- BOTTONE CHE APRE UN DIALOG PER INSERIRE NUOVI LIBRI --%>
                         <asp:Button type="button" ID="BtnOpenDialogBook" Width="50" CssClass="btn btn-primary vertical-btn d-flex align-items-center" Text="+" runat="server"/>
-                        <div id="dialog"></div>
-
-                     
+                       
 
                     </div>
                 </div>

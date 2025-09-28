@@ -24,11 +24,21 @@ textarea {
 
 /*CSS SITO*/
 
+.white-text{
+        color: white;
+
+}
+
+.muted-600{
+    color: var(--muted-600);
+}
+
+
 
 /*LOGO*/
-#Logo{
+#Logo {
     background-color: var(--primary-900) !important;
-    color:white;
+    color: white;
 }
 
 #logo-span {
@@ -37,38 +47,69 @@ textarea {
 
 /*LISTA DI NAVIGAZIONE UL */
 
+ul {
+    padding-left: 0;
+    margin: 0;
+}
+
+    ul li {
+        list-style-type: none;
+    }
+
+        ul li a {
+            text-decoration: none; /* rimuove la sottolineatura */
+            color: inherit; /* mantiene il colore del testo normale */
+        }
+
+.sidebar {
+    background-color: var(--primary-900) !important;
+}
+
 #nav-list {
-    background-color: var(--primary-700);
-    height:1280px;
 }
 
-#nav-list li {
-   
-    color: white;
-    line-height: 60px;
-}
-
-    #nav-list li:hover {
-        background-color: var(--primary-900);
-        color: white !important;
-    }
-
-    #nav-list li a {
-        margin-left: 20px;
-        color: var(--muted-600);
-    }
-
-    #nav-list li a:hover {
+    #nav-list li {
         color: white;
+        line-height: 60px;
     }
 
+        #nav-list li:hover {
+            background-color: var(--primary-900);
+            color: white !important;
+        }
 
+        #nav-list li a {
+            margin-left: 20px;
+            color: var(--muted-600);
+        }
+
+            #nav-list li a:hover {
+                color: white;
+            }
+
+/*BOXEVENT*/
+
+.box-event {
+    background-color: var(--banner-event);
+    border-radius: 5px;
+    height: auto;
+    width: 85%;
+    border: 1px solid var(--glass);
+}
+
+#BtnRegister {
+    background-color: var(--accent-600) !important;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    height: 40px;
+    width: 150px;
+}
 
 
 /*BANNER*/
-
 #banner {
-    background-color: var(--muted-400);
+    background-color: var(--banner) !important;
     border-radius: 5px;
     height: 200px;
     width: 95%;
@@ -84,9 +125,26 @@ textarea {
 }
 
 
+/*
+    DIALOG
+
+*/
+
+.ui-dialog {
+    padding: 0px;
+}
+
+.dialog-open {
+    background-color: #f8f8f8; /* esempio */
+    border: 2px solid #4CAF50;
+}
 
 
+
+/*COLORI*/
 :root {
+    --banner: #DDDCEE;
+    --banner-event: #444A6A;
     /* Palette principale (cool teal / navy) */
     --primary-900: #082032; /* navy molto scuro - elementi principali */
     --primary-700: #0F4C6A; /* navy/teal scuro - header, sidebar */
@@ -96,7 +154,7 @@ textarea {
     --accent-600: #FF6B4A; /* corallo/arancione - call to action */
     --accent-400: #FF9575; /* accento soft */
     /* Neutri / superfici */
-    --bg: #F6F8FA; /* sfondo generale */
+    --bg: #F5E9EC; /* sfondo generale */
     --surface: #FFFFFF; /* card / pannelli */
     --muted-600: #9AA7B2; /* testo secondario / placeholder */
     --muted-400: #D7E1E6; /* bordi leggeri / separatori */

@@ -10,7 +10,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%: Page.Title %> - Applicazione ASP.NET</title>
+    <title><%: Page.Title %></title>
 
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
@@ -18,12 +18,12 @@
 
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="/Content/site.css" rel="stylesheet" />
+
     <%-- Per il dropdown bootstrap --%>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-
-    <link href="/Content/site.css" rel="stylesheet" />
 
 
 </head>
@@ -50,50 +50,42 @@
 
         </asp:ScriptManager>
 
-        <style>
-            /*NAVBAR*/
-            ul {
-                padding-left: 0;
-                margin: 0;
-            }
-
-                ul li {
-                    list-style-type: none;
-                }
-
-                    ul li a {
-                        text-decoration: none; /* rimuove la sottolineatura */
-                        color: inherit; /* mantiene il colore del testo normale */
-                    }
-        </style>
 
 
         <div class="d-flex">
 
-            <div class="shadow-sm" style="width: 14%; height: 908px">
+            <div class="shadow-sm sidebar" style="width: 17%; height: 945px">
 
+                <%-- LOGO --%>
                 <div id="Logo" class="d-flex align-items-center gap-1 p-2 " >
                     BIBLIONET <span id="logo-span">Library</span>
                 </div>
 
-                <div >
+                <%-- Menu laterale --%>
+                <div>
 
                     <ul id="nav-list" class="d-flex flex-column  ">
                         <li><a href="Default.aspx">Dashboard</a></li>
-                        <li>
-                            <a href="Prestiti.aspx">Scambio</a></li>
+                      <%--  <li>
+                            <a href="Scambio.aspx">Scambio</a></li>
+                        <li>--%>
                         <li>
                         <a href="Catalogo.aspx">Catalogo</a>
                         </li>
-
-
                     </ul>
-
-
-
                 </div>
 
+                <div class="box-event d-flex flex-column justify-content-center p-4 ms-3 " style="margin-top:381px;">
+                    <h6 class="muted-600">UPCOMING EVENTS
+                    </h6>
+
+                    <h3 class="white-text">Words on Wednesday</h3>
+                    <p class="white-text">Register for our ongoing programs, as well as more health and wellness</p>
+                    <asp:Button ID="BtnRegister" Text="Register" runat="server" />
+                </div>
             </div>
+
+
             <div style="width: 100%">
 
                 <nav class="navbar w-100 mb-3 p-2 navbar-expand-lg navbar-light bg-white shadow-sm">
@@ -119,7 +111,7 @@
 
                         </div>
 
-                        <div class="collapse navbar-collapse d-flex " id="navbarNav">
+                        <div class="collapse navbar-collapse d-flex" id="navbarNav">
                             <div class="dropdown">
                                 <button class="btn btn-default dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 
@@ -139,13 +131,16 @@
                     </div>
                 </nav>
 
-                <asp:ContentPlaceHolder ID="MainContent" runat="server">
 
-
+                <asp:ContentPlaceHolder ID="MainContent" runat="server">                    
+                    <%-- Tutto quello che ha MainContent butta qui --%>
                 </asp:ContentPlaceHolder>
+
+
                 <footer>
                     <p>&copy; <%: DateTime.Now.Year %> - Domenico Giannone</p>
                 </footer>
+
             </div>
 
         </div>
