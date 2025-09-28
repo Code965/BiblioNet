@@ -201,9 +201,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
-    <Content Include="Global.asax" />
     <Content Include="Catalogo.aspx" />
-    <Content Include="Prestiti.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -272,9 +271,6 @@
     <Compile Include="Default.aspx.designer.vb">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Global.asax.vb">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Catalogo.aspx.designer.vb">
       <DependentUpon>Catalogo.aspx</DependentUpon>
     </Compile>
@@ -282,12 +278,11 @@
       <DependentUpon>Catalogo.aspx</DependentUpon>
       <SubType>ASPXCodebehind</SubType>
     </Compile>
-    <Compile Include="Prestiti.aspx.designer.vb">
-      <DependentUpon>Prestiti.aspx</DependentUpon>
+    <Compile Include="Global.asax.designer.vb">
+      <DependentUpon>Global.asax.vb</DependentUpon>
     </Compile>
-    <Compile Include="Prestiti.aspx.vb">
-      <DependentUpon>Prestiti.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+    <Compile Include="Global.asax.vb">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -307,6 +302,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Tools.Master.designer.vb">
+      <DependentUpon>Tools.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Tools.Master.vb">
+      <DependentUpon>Tools.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Site.Master.designer.vb">
       <DependentUpon>Site.Master</DependentUpon>
@@ -376,6 +378,7 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\jquery-3.7.0.slim.min.map" />
     <Content Include="Scripts\jquery-3.7.0.min.map" />
+    <Content Include="Tools.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
