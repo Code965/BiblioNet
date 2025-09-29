@@ -2,7 +2,9 @@
     Namespace="Microsoft.AspNet.Web.Optimization.WebForms"
     Assembly="Microsoft.AspNet.Web.Optimization.WebForms" %>
 
-<%@ Master Language="VB" AutoEventWireup="true" CodeBehind="Site.master.vb" Inherits="BiblioNet.ToolsMaster" %>
+<%@ Master Language="VB" AutoEventWireup="true" CodeBehind="Tools.master.vb" Inherits="BiblioNet.ToolsMaster" %>
+<%@ Import Namespace="System.Web.Optimization" %>
+
 
 <!DOCTYPE html>
 <html lang="it">
@@ -44,8 +46,14 @@
             </Scripts>
         </asp:ScriptManager>
 
+
+
         <div class="container-fluid p-3">
+
+
             <asp:ContentPlaceHolder ID="SecondContent"  runat="server">
+
+             
 
 
 

@@ -11,14 +11,23 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class ToolsMaster
+Partial Public Class SiteMaster
 
     '''<summary>
-    '''Controllo SecondContent.
+    '''Controllo BtnRegister.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents SecondContent As Global.System.Web.UI.WebControls.ContentPlaceHolder
+    Protected WithEvents BtnRegister As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Controllo MainContent.
+    '''</summary>
+    '''<remarks>
+    '''Campo generato automaticamente.
+    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+    '''</remarks>
+    Protected WithEvents MainContent As Global.System.Web.UI.WebControls.ContentPlaceHolder
 End Class

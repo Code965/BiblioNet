@@ -29,6 +29,22 @@ Namespace Database
         Public Property _GroupBy As String
 
 
+        'Costruttore
+
+        Public Sub New()
+            'Inizializzo le proprietà a stringa vuota
+            _Select = String.Empty
+            _From = String.Empty
+            _Insert = String.Empty
+            _Update = String.Empty
+            _Delete = String.Empty
+            _Where = String.Empty
+            _OrderBy = String.Empty
+            _GroupBy = String.Empty
+        End Sub
+
+
+
         'METODI
 
         ' SELECT

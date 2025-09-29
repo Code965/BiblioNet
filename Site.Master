@@ -3,6 +3,7 @@
     Assembly="Microsoft.AspNet.Web.Optimization.WebForms" %>
 
 <%@ Master Language="VB" AutoEventWireup="true" CodeBehind="Site.master.vb" Inherits="BiblioNet.SiteMaster" %>
+<%@ Import Namespace="System.Web.Optimization" %>
 
 <!DOCTYPE html>
 <html lang="it">
@@ -57,7 +58,7 @@
             <div class="shadow-sm sidebar" style="width: 17%; height: 945px">
 
                 <%-- LOGO --%>
-                <div id="Logo" class="d-flex align-items-center gap-1 p-2 " >
+                <div id="Logo" class="d-flex align-items-center gap-1 p-4 " >
                     BIBLIONET <span id="logo-span">Library</span>
                 </div>
 
@@ -66,9 +67,9 @@
 
                     <ul id="nav-list" class="d-flex flex-column  ">
                         <li><a href="Default.aspx">Dashboard</a></li>
-                      <%--  <li>
+                        <li>
                             <a href="Scambio.aspx">Scambio</a></li>
-                        <li>--%>
+                        <li>
                         <li>
                         <a href="Catalogo.aspx">Catalogo</a>
                         </li>

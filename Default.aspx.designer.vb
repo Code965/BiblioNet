@@ -23,6 +23,15 @@ Partial Public Class _Default
     Protected WithEvents BtnMonthBook As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''Controllo RptScambio.
+    '''</summary>
+    '''<remarks>
+    '''Campo generato automaticamente.
+    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+    '''</remarks>
+    Protected WithEvents RptScambio As Global.System.Web.UI.WebControls.Repeater
+
+    '''<summary>
     '''Controllo BtnOpenDialogBook.
     '''</summary>
     '''<remarks>

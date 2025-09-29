@@ -34,6 +34,12 @@ textarea {
 }
 
 
+/*BOTTONI*/
+
+#BtnOpenDialogBook {
+    background-color: var(--primary-700) !important;
+}
+
 
 /*LOGO*/
 #Logo {
@@ -120,6 +126,7 @@ ul {
 #on-loan {
     border-radius: 5px;
     height: auto;
+    background-color: white;
     width: 95%;
     border: 1px solid var(--glass);
 }
@@ -130,6 +137,27 @@ ul {
 
 */
 
+
+/* Arrotonda l’intero dialog */
+.ui-dialog.dialog-open {
+    border-radius: 5px; /* cambia il valore come vuoi */
+    overflow: hidden; /* evita che il contenuto esca dai bordi arrotondati */
+}
+
+    /* Arrotonda anche la titlebar */
+    .ui-dialog.dialog-open .ui-dialog-titlebar {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+    }
+
+    /* Arrotonda la parte content e footer */
+    .ui-dialog.dialog-open .ui-dialog-content,
+    .ui-dialog.dialog-open .ui-dialog-buttonpane {
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+
 .ui-dialog {
     padding: 0px;
 }
@@ -139,8 +167,68 @@ ul {
     border: 2px solid #4CAF50;
 }
 
+.ui-dialog .ui-dialog-content{
+    overflow:hidden;
+}
+
+.ui-dialog-titlebar {
+    background-color: var(--primary-700);
+    color: white;
+    border: none;
+}
+
+.ui-dialog-content ui-widget-content {
+    border: none;
+    background-color: var(--bg) !important;
+}
 
 
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default, .ui-button, html .ui-button.ui-state-disabled:hover, html .ui-button.ui-state-disabled:active {
+    border: 1px solid #c5c5c5;
+    background: var(--primary-700);
+    font-weight: normal;
+    color: white !important;
+    border:none;
+}
+
+    /* Forza colore bianco su tutto il bottone e i suoi figli */
+    .ui-button,
+    .ui-state-default,
+    .ui-widget-content .ui-state-default,
+    .ui-widget-header .ui-state-default,
+    .ui-state-default.ui-state-hover,
+    .ui-button.ui-state-hover,
+    .ui-state-default:focus,
+    .ui-button:focus,
+    .ui-state-default:active,
+    .ui-button:active {
+        border: none !important; /* niente bordo */
+        background: var(--primary-700) !important; /* sfondo fisso */
+        color: white !important; /* testo bianco */
+        box-shadow: none !important; /* rimuove ombre */
+    }
+
+        /* Se il bottone contiene elementi figli (span, i, svg, ecc.) */
+        .ui-button * {
+            color: white !important;
+            text-decoration: overline;
+            border: none;
+        }
+
+
+
+.icon-circle {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px; /* dimensione cerchio */
+    height: 32px; /* dimensione cerchio */
+    border-radius: 50%; /* rende il contenitore rotondo */
+    background-color: white; /* colore di sfondo */
+    color: white; /* colore icona */
+    font-size: 20px; /* dimensione icona */
+}
 /*COLORI*/
 :root {
     --banner: #DDDCEE;
