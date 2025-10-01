@@ -3,6 +3,11 @@
 
 <asp:Content ID="Content2" ContentPlaceHolderID="SecondContent" runat="server">
 
+    <script>
+
+
+    </script>
+
     <div class="row">
 
         <h1>Inserisci un nuovo libro</h1>

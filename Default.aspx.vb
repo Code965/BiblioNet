@@ -107,8 +107,8 @@ Public Class _Default
 
     Protected Sub BtnOpenDialogBook_Click(sender As Object, e As EventArgs)
 
+        'AddJScript("openDialog(""#dialog-scambio"", ""/AddBook.aspx"", 'Aggiungi Libro', '1200', '500');")
 
-        AddJScript("openDialog(""#dialog-scambio"", ""/AddBook.aspx"", 'Aggiungi Libro', '1200', '500');")
     End Sub
 
 
