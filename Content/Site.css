@@ -131,6 +131,14 @@ ul {
 }
 
 
+#on-sell {
+    border-radius: 5px;
+    height: auto;
+    background-color: white;
+    width: 95%;
+    border: 1px solid var(--glass);
+}
+
 /*
     DIALOG
 
