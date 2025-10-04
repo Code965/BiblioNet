@@ -24,12 +24,11 @@ textarea {
 
 /*CSS SITO*/
 
-.white-text{
-        color: white;
-
+.white-text {
+    color: white;
 }
 
-.muted-600{
+.muted-600 {
     color: var(--muted-600);
 }
 
@@ -167,8 +166,8 @@ ul {
     border: 2px solid #4CAF50;
 }
 
-.ui-dialog .ui-dialog-content{
-    overflow:hidden;
+.ui-dialog .ui-dialog-content {
+    overflow: hidden;
 }
 
 .ui-dialog-titlebar {
@@ -189,7 +188,7 @@ ul {
     background: var(--primary-700);
     font-weight: normal;
     color: white !important;
-    border:none;
+    border: none;
 }
 
     /* Forza colore bianco su tutto il bottone e i suoi figli */
@@ -214,7 +213,30 @@ ul {
             color: white !important;
             text-decoration: overline;
             border: none;
-        } 
+        }
+
+
+/* Nascondo l’icona di default di jQuery UI */
+.ui-dialog-titlebar-close .ui-icon {
+    display: none;
+}
+
+/* Rendo il bottone minimal */
+.ui-dialog-titlebar-close {
+    background: none !important;
+    border: none !important;
+    color: white !important;
+    font-size: 20px; /* grandezza della X */
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 1;
+}
+
+    /* Metto manualmente la X come contenuto */
+    .ui-dialog-titlebar-close::before {
+        content: "×";
+    }
+
 
 
 
@@ -229,8 +251,67 @@ ul {
     color: white; /* colore icona */
     font-size: 20px; /* dimensione icona */
 }
+
+
+/*DROPDOWN*/
+
+/* Stile bottone */
+
+/* Container dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Menu nascosto */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%; /* sotto al bottone */
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-width: 160px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+    .dropdown-menu li {
+        list-style: none;
+    }
+
+    .dropdown-menu a {
+        display: block;
+        padding: 8px 12px;
+        text-decoration: none;
+        color: #333;
+    }
+
+        .dropdown-menu a:hover {
+            background: #f1f1f1;
+        }
+
+/* Mostra il menu quando attivo */
+.dropdown.open .dropdown-menu {
+    display: block;
+}
+
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 123%;
+    left: -50px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius Defines the radii of the outer border edge. Widely available across major browsers (Baseline since January 2018) Learn more Don't show : 5px; min-width: 160px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
 /*COLORI*/
-:root { 
+:root {
     --banner: #DDDCEE;
     --banner-event: #444A6A;
     /* Palette principale (cool teal / navy) */
