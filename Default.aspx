@@ -42,8 +42,10 @@
                     "Chiudi": function () {
                         $(this).dialog("close");
                     }
-
-
+                },
+                open: function () {
+                    // Aggiungo classi Bootstrap ai pulsanti quando il dialog si apre
+                    $(this).parent().find(".ui-dialog-buttonpane button").addClass("btn btn-dark");
                 }
             });
 
