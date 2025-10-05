@@ -23,6 +23,24 @@ Partial Public Class SiteMaster
     Protected WithEvents BtnRegister As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''Controllo btnDropDown.
+    '''</summary>
+    '''<remarks>
+    '''Campo generato automaticamente.
+    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+    '''</remarks>
+    Protected WithEvents btnDropDown As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
+    '''Controllo lnkLogout.
+    '''</summary>
+    '''<remarks>
+    '''Campo generato automaticamente.
+    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+    '''</remarks>
+    Protected WithEvents lnkLogout As Global.System.Web.UI.WebControls.LinkButton
+
+    '''<summary>
     '''Controllo MainContent.
     '''</summary>
     '''<remarks>

@@ -103,6 +103,62 @@ Namespace Database
         End Function
 
 
+        'Public Function ToObj(Of T)() As T
+        '    Dim sql = Build()
+        '    Using conn As New MySqlConnection(connStr)
+        '        Using cmd As New MySqlCommand(sql, conn)
+        '            conn.Open()
+        '            Dim result = cmd.ExecuteScalar()
+        '            ' Prova a convertire il risultato al tipo richiesto
+        '            Return If(result Is Nothing OrElse IsDBNull(result), Nothing, CType(result, T))
+        '        End Using
+        '    End Using
+        'End Function
+
+
+
+        Public Function ToObj(Of T As New)() As T
+            Dim sql = Build()
+            Using conn As New MySqlConnection(connStr)
+                Using cmd As New MySqlCommand(sql, conn)
+                    conn.Open()
+
+                    ' Se T è un tipo scalare
+                    If GetType(T).IsPrimitive OrElse GetType(T) Is GetType(String) OrElse GetType(T) Is GetType(Decimal) Then
+                        Dim result = cmd.ExecuteScalar()
+                        Return If(result Is Nothing OrElse IsDBNull(result), Nothing, CType(Convert.ChangeType(result, GetType(T)), T))
+                    End If
+
+                    ' Altrimenti assume che sia un oggetto complesso
+                    Using reader = cmd.ExecuteReader()
+                        If reader.Read() Then
+                            Dim obj As New T()
+                            For Each prop In GetType(T).GetProperties()
+                                If ColumnExists(reader, prop.Name) AndAlso Not IsDBNull(reader(prop.Name)) Then
+                                    prop.SetValue(obj, Convert.ChangeType(reader(prop.Name), prop.PropertyType))
+                                End If
+                            Next
+                            Return obj
+                        Else
+                            Return Nothing
+                        End If
+                    End Using
+
+                End Using
+            End Using
+        End Function
+
+        ' Funzione helper per verificare se la colonna esiste nel DataReader
+        Private Function ColumnExists(reader As MySqlDataReader, columnName As String) As Boolean
+            For i As Integer = 0 To reader.FieldCount - 1
+                If reader.GetName(i).Equals(columnName, StringComparison.OrdinalIgnoreCase) Then
+                    Return True
+                End If
+            Next
+            Return False
+        End Function
+
+
         ' Restituisce DataTable
         Public Function ToDataTable() As DataTable
             Dim sql = Build()

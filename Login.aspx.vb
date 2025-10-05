@@ -1,5 +1,7 @@
-﻿Imports BiblioNet.JsScript.JsHelper
-
+﻿Imports System.Security.Cryptography
+Imports BiblioNet.JsScript.JsHelper
+Imports BiblioNet.UsersModel
+Imports MyTools
 Public Class Login
     Inherits System.Web.UI.Page
 
@@ -13,67 +15,143 @@ Public Class Login
     End Sub
 
 
+    Protected Sub Login(sender As Object, e As EventArgs) Handles BtnSignIn.Click
+        Dim q = New Database.MySql()
+
+        Try
+            Dim email As String = TxtEmail.Text.Trim()
+            Dim password As String = TxtPassword.Text.Trim()
+
+            ' Recupera l'utente dal database tramite email
+            Dim user = q.Select("*").From("users").Where("email", " = ", $"'{email}'").ToObj(Of Users)
+
+            If user Is Nothing Then
+                ' Utente non trovato
+                AddJScript("alert('Email non valida.');")
+                Return
+            End If
+
+            ' Verifica la password
+            If Not VerifyPassword(password, user.Password) Then
+                AddJScript("alert('Password non valida.');")
+                Return
+
+            End If
+
+            ' Login corretto: crea il cookie
+            FormsAuthentication.SetAuthCookie(email, False)
+
+            ' Aggiorna il dropdown con il nome in modo sicuro
+            'Dim safeName As String = EscapeJs(user.Name)
+            'AddJScript("$('#btnDropDown').value('" & safeName & "'); window.location='Default.aspx';")
+
+            Session("name") = user.Name
+
+            TxtEmail.Text = ""
+            TxtPassword.Text = ""
+
+            Response.Redirect("Default.aspx")
+
+
+        Catch ex As Exception
+            ' Gestione errori
+            Throw New Exception("Errore durante il login: " & ex.Message & q.Build)
+        End Try
+    End Sub
+
+    ' Funzione helper per escape sicuro dei caratteri JS
+    Private Function EscapeJs(s As String) As String
+        Return s.Replace("\", "\\").Replace("'", "\'").Replace("""", "\""")
+    End Function
+
+
+    'Protected Sub Logout(sender As Object, e As EventArgs) Handles btnLogout.Click
+    '    FormsAuthentication.SignOut()
+    '    Response.Redirect("Login.aspx")
+    'End Sub
+
+
+    'Protected Sub Login(sender As Object, e As EventArgs) Handles BtnSignIn.Click
+
+    '    Dim q = New Database.MySql()
+
+    '    Try
+
+    '        Dim email As String = TxtEmail.Text.Trim
+    '        Dim password As String = TxtPassword.Text.Trim()
+
+
+    '        Dim user = q.Select("*").From("users").Where("email", " = ", $"'{email}'").ToObj(Of Users)
+
+    '        ' Esempio hardcoded (in produzione usa DB e hash delle password)
+    '        If email = user.Email Then
+
+    '            If VerifyPassword(password, user.Password) Then
+    '                ' Crea il cookie di autenticazione
+    '                FormsAuthentication.SetAuthCookie(email, False)
+    '                Dim safeName As String = user.Name.Replace("'", "\'")
+
+
+    '                AddJScript("$('#btnDropDown').text('" & safeName & "');")
+
+    '                ' Reindirizza alla pagina originale o alla home
+    '                Dim returnUrl As String = Request.QueryString("ReturnUrl")
+    '                If Not String.IsNullOrEmpty(returnUrl) Then
+    '                    Response.Redirect(returnUrl)
+    '                Else
+    '                    Response.Redirect("Default.aspx")
+    '                End If
+    '            Else
+    '                AddJScript("alert('Username o password non validi.');")
+    '            End If
+    '        Else
+    '            AddJScript("alert('Email non valida.');")
+    '        End If
+    '    Catch ex As Exception
+    '        'AddJScript("Errore durante il login: " & ex.Message & q.Build)
+    '        Throw New Exception("Errore durante il login: " & ex.Message & q.Build)
+    '    End Try
+    'End Sub
+
+    ' Verifica la password confrontando con la stringa salvata nel DB
+    Public Shared Function VerifyPassword(password As String, stored As String) As Boolean
+        If password Is Nothing Then Throw New ArgumentNullException(NameOf(password))
+        If stored Is Nothing Then Throw New ArgumentNullException(NameOf(stored))
+
+        ' stored expected format: iterations:salt:hash
+        Dim parts() As String = stored.Split(":"c)
+        If parts.Length <> 3 Then Throw New FormatException("Stored password has invalid format.")
+
+        Dim iterations As Integer = Integer.Parse(parts(0))
+        Dim salt As Byte() = Convert.FromBase64String(parts(1))
+        Dim storedHash As Byte() = Convert.FromBase64String(parts(2))
+
+        Dim computedHash As Byte()
+        Using pbkdf2 = New Rfc2898DeriveBytes(password, salt, iterations)
+            computedHash = pbkdf2.GetBytes(storedHash.Length)
+        End Using
+
+        ' Confronto tempo-costante per evitare attacchi timing
+        Return FixedTimeEquals(storedHash, computedHash)
+    End Function
+
+
+    ' Confronto tempo-costante
+    Private Shared Function FixedTimeEquals(a As Byte(), b As Byte()) As Boolean
+        If a Is Nothing OrElse b Is Nothing Then Return False
+        If a.Length <> b.Length Then Return False
+
+        Dim diff As Integer = 0
+        For i As Integer = 0 To a.Length - 1
+            diff = diff Or (a(i) Xor b(i))
+        Next
+        Return diff = 0
+    End Function
+
 
     Protected Sub InitPage()
 
     End Sub
 
-    Protected Sub BtnSubmitBook_Click(sender As Object, e As EventArgs) Handles BtnSubmitBook.Click
-
-        Dim titolo As String = TxtTitle.Text
-        Dim autore As String = DrpAutore.SelectedValue
-        Dim edizione As String = DrpEditore.Text
-        Dim ISBN As String = TxtIsbn.Text
-        Dim descrizione As String = TxtDescription.Text
-        Dim prezzo As String = TxtPrice.Text
-        Dim quantita As String = TxtQtn.Text
-        Dim categoria As String = DrpCategoria.SelectedValue
-        Dim img As String = TxtImagePath.Text
-        Dim dataPubblicazione As String = txtDataPublicazione.Text
-        Dim genere As String = TxtGenre.Text
-
-        If String.IsNullOrEmpty(titolo) OrElse
-           String.IsNullOrEmpty(autore) OrElse
-           String.IsNullOrEmpty(edizione) OrElse
-           String.IsNullOrEmpty(ISBN) OrElse
-           String.IsNullOrEmpty(descrizione) OrElse
-           String.IsNullOrEmpty(prezzo) OrElse
-           String.IsNullOrEmpty(quantita) OrElse
-           String.IsNullOrEmpty(categoria) OrElse
-           String.IsNullOrEmpty(dataPubblicazione) OrElse
-           String.IsNullOrEmpty(genere) Then
-
-            ' Mostra messaggio di errore
-            AddJScript("alert(' Tutti i campi obbligatori devono essere compilati.')")
-            Exit Sub
-        End If
-
-        Dim q As MyTools.Database.MySql = New MyTools.Database.MySql()
-
-        Try
-
-            q.InsertInto("books",
-             "title, author_id, publisher_id, isbn, description, price, stock_quantity, category_id, cover_image_url, publication_date, genres, created_at, updated_at",
-             "'" & titolo & "', " &
-             "'" & autore & "', " &
-             "'" & edizione & "', " &
-             "'" & ISBN & "', " &
-             "'" & descrizione & "', " &
-             "'" & Convert.ToDouble(prezzo) & "', " &
-             "'" & quantita & "', " &
-             "'" & categoria & "', " &
-             "'" & img & "', " &
-             "'" & dataPubblicazione & "', " &
-             "'" & genere & "', " &
-             "NOW(), " &
-             "NOW()").ExecuteNonQuery()
-
-
-
-        Catch ex As Exception
-            Throw New Exception("Errore durante l'inserimento del libro: " & ex.Message)
-        End Try
-
-    End Sub
 
 End Class

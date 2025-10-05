@@ -12,4 +12,40 @@ Option Explicit On
 
 
 Partial Public Class Login
+
+    '''<summary>
+    '''Controllo TxtEmail.
+    '''</summary>
+    '''<remarks>
+    '''Campo generato automaticamente.
+    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+    '''</remarks>
+    Protected WithEvents TxtEmail As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Controllo TxtPassword.
+    '''</summary>
+    '''<remarks>
+    '''Campo generato automaticamente.
+    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+    '''</remarks>
+    Protected WithEvents TxtPassword As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
+    '''Controllo BtnSignIn.
+    '''</summary>
+    '''<remarks>
+    '''Campo generato automaticamente.
+    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+    '''</remarks>
+    Protected WithEvents BtnSignIn As Global.System.Web.UI.WebControls.Button
+
+    '''<summary>
+    '''Controllo ChkRememberMe.
+    '''</summary>
+    '''<remarks>
+    '''Campo generato automaticamente.
+    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+    '''</remarks>
+    Protected WithEvents ChkRememberMe As Global.System.Web.UI.WebControls.CheckBox
 End Class

@@ -11,113 +11,113 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class AddBook
+Partial Public Class Register
 
     '''<summary>
-    '''Controllo TxtTitle.
+    '''Controllo TxtName.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents TxtTitle As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents TxtName As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo DrpAutore.
+    '''Controllo TxtSurname.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents DrpAutore As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents TxtSurname As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo DrpEditore.
+    '''Controllo TxtEmail.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents DrpEditore As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents TxtEmail As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo TxtIsbn.
+    '''Controllo TxtPassword.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents TxtIsbn As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents TxtPassword As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo TxtDescription.
+    '''Controllo TxtPhone.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents TxtDescription As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents TxtPhone As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo TxtPrice.
+    '''Controllo TxtCF.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents TxtPrice As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents TxtCF As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo TxtQtn.
+    '''Controllo DrpCountry.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents TxtQtn As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents DrpCountry As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Controllo TxtImagePath.
+    '''Controllo DrpRegion.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents TxtImagePath As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents DrpRegion As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Controllo txtDataPublicazione.
+    '''Controllo DrpProvince.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents txtDataPublicazione As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents DrpProvince As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Controllo DrpCategoria.
+    '''Controllo DrpCity.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents DrpCategoria As Global.System.Web.UI.WebControls.DropDownList
+    Protected WithEvents DrpCity As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Controllo TxtGenre.
+    '''Controllo DrpCap.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents TxtGenre As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents DrpCap As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Controllo BtnSubmitBook.
+    '''Controllo BtnRegister.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnSubmitBook As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents BtnRegister As Global.System.Web.UI.WebControls.Button
 End Class

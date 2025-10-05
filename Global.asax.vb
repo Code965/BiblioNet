@@ -1,4 +1,5 @@
-﻿Imports System.Web.Optimization
+﻿
+Imports System.Web.Optimization
 
 Public Class Global_asax
     Inherits HttpApplication
