@@ -17,7 +17,7 @@
 </script>
 
     <style>
-        body {
+        body { 
             background-color: var(--bg);
         }
 
