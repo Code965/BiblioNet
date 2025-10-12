@@ -1,4 +1,4 @@
-﻿<%@ Register TagPrefix="webopt"
+﻿﻿<%@ Register TagPrefix="webopt"
     Namespace="Microsoft.AspNet.Web.Optimization.WebForms"
     Assembly="Microsoft.AspNet.Web.Optimization.WebForms" %>
 
