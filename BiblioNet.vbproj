@@ -215,6 +215,7 @@
     <Content Include="Scripts\jquery-3.7.0.min.js" />
     <Content Include="Scripts\jquery-3.7.0.slim.js" />
     <Content Include="Scripts\jquery-3.7.0.slim.min.js" />
+    <Content Include="Scripts\js\globalFunction.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
@@ -241,6 +242,9 @@
     <Content Include="Bundle.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Default.aspx.designer.vb">
+      <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.designer.vb">
       <DependentUpon>Global.asax.vb</DependentUpon>
     </Compile>
@@ -276,9 +280,6 @@
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Default.aspx.designer.vb">
-      <DependentUpon>Default.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Catalogo.aspx.designer.vb">
       <DependentUpon>Catalogo.aspx</DependentUpon>
     </Compile>
@@ -311,7 +312,7 @@
     </Compile>
     <Compile Include="Scambio.aspx.vb">
       <DependentUpon>Scambio.aspx</DependentUpon>
-      <SubType>ASPXCodebehind</SubType>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Tools.Master.designer.vb">
       <DependentUpon>Tools.Master</DependentUpon>

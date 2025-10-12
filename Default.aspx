@@ -10,51 +10,12 @@
 
     <link href="/Content/site.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=book_5" />
-    
+
     <script>
-        function openDialog(dialogSelector, pageUrl, title, width, height) {
 
-            var $dialog = $(dialogSelector);
 
-            // se il div non esiste, lo creo e lo aggiungo al body
-            if ($dialog.length === 0) {
-                $dialog = $('<div>', { id: dialogSelector.replace('#', '') });
-                $('body').append($dialog);
-            }
+</script>
 
-            // pulisco il contenuto
-            $dialog.empty();
-
-            // inserisco l'iframe
-            $dialog.html('<iframe src="' + pageUrl + '" style="border:0;width:100%;height:100%;"></iframe>');
-
-            // apro il dialog
-            $dialog.dialog({
-                modal: true,
-                title: title,
-                width: width,
-                height: height,
-                dialogClass: "dialog-open",
-                buttons: {
-                    "Chiudi": function () {
-                        $(this).dialog("close");
-                    }
-                },
-                open: function () {
-                    // Aggiungo classi Bootstrap ai pulsanti quando il dialog si apre
-                    $(this).parent().find(".ui-dialog-buttonpane button").addClass("btn btn-dark");
-                }
-            });
-
-            $dialog.parent().find(".ui-dialog-title").html(`
-          <div class="d-flex align-items-center gap-2">
-            <span class="material-symbols-outlined icon-circle d-flex aling-items-center" style="color:black;">book_5</span>
-            Aggiungi Libro
-          </div>
-        `);
-        }
-    </script>
-    
     <style>
         body {
             background-color: var(--bg);
@@ -71,6 +32,9 @@
     </style>
 
     <div class="d-flex w-100 p-2 gap-4 flex-column align-items-center ">
+
+        <asp:Literal ID="litProgress" runat="server"></asp:Literal>
+
 
         <div id="banner" class="d-flex align-items-center">
 
@@ -89,43 +53,55 @@
         </div>
 
         <div id="on-loan" class=" d-flex p-2 flex-column">
-              
-            <h1>Scambio Libri</h1> 
+
 
             <%-- ELENCO DI IMMAGINI - LO FACCIAMO CON UN REPEATER --%>
-            <div class="d-flex flex-wrap gap-3 p-4 mt-3">
 
-                <asp:Repeater ID="RptScambio" runat="server">
-                    <ItemTemplate>
+            <div class="d-flex flex-column gap-3 p-3 w-100">
 
-                        <div>
-                            <img src="/Images/copertine/barack.jpeg" alt="Alternate Text" style="border-radius: 5px;" />
-                            <div class="mt-2 text-muted line " style="line-height: 10px;">
-                                <p><%# Eval("Title") %> </p>
-                                <p><%# Eval("AuthorID") %></p>
+                <!-- RIGA SUPERIORE: titolo a sinistra, ricerca a destra -->
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <span class="h5 mb-0">Scambio Libri</span>
+                    <div class="d-flex gap-2">
+                        <asp:TextBox ID="TxtSearchBook" CssClass="form-control" placeholder="Cerca libro..." runat="server" />
+                        <asp:Button Text="Aggiorna" ID="BtnApply" CssClass="btn btn-dark" runat="server" />
+                    </div>
+                </div>
+
+                <!-- REPEATER LIBRI -->
+                <div class="d-flex flex-wrap gap-3">
+                    <asp:Repeater ID="RptExchange" runat="server">
+                        <ItemTemplate>
+                            <div class="" style="width: 150px;">
+                                <img src="/Images/copertine/barack.jpeg" class="card-img-top" alt="Copertina" style="border-radius: 5px;" />
+                                <div class="card-body p-2 text-muted" style="line-height: 1.2;">
+                                    <p class="mb-1"><%# Eval("Title") %></p>
+                                    <p class="mb-0"><%# Eval("AuthorID") %></p>
+                                </div>
                             </div>
-                        </div>
+                        </ItemTemplate>
+                    </asp:Repeater>
 
-                    </ItemTemplate>
-                </asp:Repeater>
-
-                <div>
-                    <div class=" text-muted line " style="line-height: 10px;">
-
-                        <%-- BOTTONE CHE APRE UN DIALOG PER INSERIRE NUOVI LIBRI --%>
-                        <asp:Button type="button" ID="BtnOpenDialogBook" CssClass="btn btn-primary d-flex align-items-center" Text="+" OnClientClick="openDialog('#dialog-scambio','/AddBook.aspx','Aggiungi Libro',1200,500); return false;" runat="server"/>
-
+                    <!-- BOTTONE PER AGGIUNGERE NUOVI LIBRI -->
+                    <div class="d-flex align-items-center">
+                        <asp:Button
+                            type="button"
+                            ID="BtnOpenDialogBook"
+                            CssClass="btn btn-primary"
+                            Text="+"
+                            OnClientClick="openDialog('#dialog-scambio','/AddBook.aspx','Aggiungi Libro',1200,500); return false;"
+                            runat="server" />
                     </div>
                 </div>
 
             </div>
         </div>
 
-        <div id="on-sell" class=" d-flex p-2 flex-column" style="width:95%">
+        <div id="on-sell" class=" d-flex p-2 flex-column" style="width: 95%">
             <h1>Vendita Libri</h1>
 
             <%-- DIALOG PER INSERIRE NUOVI LIBRI--%>
-            <div id="addBooksDialog" title="Aggiungi libri:">                
+            <div id="addBooksDialog" title="Aggiungi libri:">
             </div>
 
             <%-- ELENCO DI IMMAGINI - LO FACCIAMO CON UN REPEATER --%>
@@ -152,7 +128,7 @@
 
                         <%-- BOTTONE CHE APRE UN DIALOG PER INSERIRE NUOVI LIBRI --%>
                         <asp:Button type="button" CssClass="btn btn-primary vertical-btn" Text="+" OnClientClick="openDialog('#dialog-scambio','/AddBook.aspx','Aggiungi Libro',1200,500); return false;" runat="server"></asp:Button>
-                                                
+
                     </div>
                 </div>
 
@@ -160,5 +136,49 @@
         </div>
 
     </div>
+
+    <asp:Panel ID="PnlImport" runat="server">
+        <div class="d-flex w-100 p-2 gap-4 flex-column align-items-center ">
+
+            <div id="import" class=" d-flex p-2 flex-column" style="width: 95%">
+                <h1>IMPORT</h1>
+
+
+
+                <div class="d-flex flex-column gap-2">
+
+                    <asp:Label Text="Inserisci una categoria" runat="server" /> 
+                    <div class="d-flex gap-2">
+                                            <asp:TextBox ID="TxtCategories" CssClass="form-control"  placeholder="science..." runat="server" />
+                        <asp:Button Text="Importa valori" CssClass="btn btn-dark" ID="BtnImportBook" runat="server" />
+
+                    </div>
+                    <small>Importa i libri da openlibrary </small>
+
+                </div>
+
+
+
+                <div class="d-flex flex-column mt-3">
+
+                    <asp:Button Text="Elimina Duplicati" ID="BtnDeleteDuplicates" CssClass="btn btn-dark" runat="server" />
+                    <small>Elimina tutti i duplicati</small>
+                </div>
+
+
+                <div class="d-flex flex-column mt-3">
+
+                    <asp:Button Text="INSERT INTO Author" ID="BtnAddAuthor" CssClass="btn btn-dark" runat="server" />
+                    <small>Inserisce tutti gli autori da booksopenlibrary a authors </small>
+                </div>
+
+            </div>
+        </div>
+    </asp:Panel>
+
+
+
+
+    <asp:Button ID="BtnReload" runat="server" Text="Button" CssClass="btn btn-primary" Visible="False" />
 
 </asp:Content>

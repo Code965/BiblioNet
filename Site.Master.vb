@@ -16,7 +16,12 @@
     End Sub
 
     Protected Sub btnDropDown_Click(sender As Object, e As EventArgs)
-        Response.Redirect("Default.aspx")
+        If Session("name") IsNot Nothing Then
+            Response.Redirect("Default.aspx")
+        Else
+            Response.Redirect("Login.aspx")
+        End If
+
     End Sub
 
 End Class

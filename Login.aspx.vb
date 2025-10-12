@@ -2,6 +2,7 @@
 Imports BiblioNet.JsScript.JsHelper
 Imports BiblioNet.UsersModel
 Imports MyTools
+
 Public Class Login
     Inherits System.Web.UI.Page
 
@@ -47,6 +48,11 @@ Public Class Login
 
             Session("name") = user.Name
 
+            CurrentUser.UserId = user.Id
+            CurrentUser.Name = user.Name
+            CurrentUser.Role = user.Role
+            CurrentUser.email = user.Email
+
             TxtEmail.Text = ""
             TxtPassword.Text = ""
 
@@ -65,55 +71,6 @@ Public Class Login
     End Function
 
 
-    'Protected Sub Logout(sender As Object, e As EventArgs) Handles btnLogout.Click
-    '    FormsAuthentication.SignOut()
-    '    Response.Redirect("Login.aspx")
-    'End Sub
-
-
-    'Protected Sub Login(sender As Object, e As EventArgs) Handles BtnSignIn.Click
-
-    '    Dim q = New Database.MySql()
-
-    '    Try
-
-    '        Dim email As String = TxtEmail.Text.Trim
-    '        Dim password As String = TxtPassword.Text.Trim()
-
-
-    '        Dim user = q.Select("*").From("users").Where("email", " = ", $"'{email}'").ToObj(Of Users)
-
-    '        ' Esempio hardcoded (in produzione usa DB e hash delle password)
-    '        If email = user.Email Then
-
-    '            If VerifyPassword(password, user.Password) Then
-    '                ' Crea il cookie di autenticazione
-    '                FormsAuthentication.SetAuthCookie(email, False)
-    '                Dim safeName As String = user.Name.Replace("'", "\'")
-
-
-    '                AddJScript("$('#btnDropDown').text('" & safeName & "');")
-
-    '                ' Reindirizza alla pagina originale o alla home
-    '                Dim returnUrl As String = Request.QueryString("ReturnUrl")
-    '                If Not String.IsNullOrEmpty(returnUrl) Then
-    '                    Response.Redirect(returnUrl)
-    '                Else
-    '                    Response.Redirect("Default.aspx")
-    '                End If
-    '            Else
-    '                AddJScript("alert('Username o password non validi.');")
-    '            End If
-    '        Else
-    '            AddJScript("alert('Email non valida.');")
-    '        End If
-    '    Catch ex As Exception
-    '        'AddJScript("Errore durante il login: " & ex.Message & q.Build)
-    '        Throw New Exception("Errore durante il login: " & ex.Message & q.Build)
-    '    End Try
-    'End Sub
-
-    ' Verifica la password confrontando con la stringa salvata nel DB
     Public Shared Function VerifyPassword(password As String, stored As String) As Boolean
         If password Is Nothing Then Throw New ArgumentNullException(NameOf(password))
         If stored Is Nothing Then Throw New ArgumentNullException(NameOf(stored))
