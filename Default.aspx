@@ -1,4 +1,4 @@
-﻿<%@ Page Title="BiblioNet" Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.vb" Inherits="BiblioNet._Default" %>
+<%@ Page Title="BiblioNet" Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.vb" Inherits="BiblioNet._Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -56,7 +56,7 @@
 
 
             <%-- ELENCO DI IMMAGINI - LO FACCIAMO CON UN REPEATER --%>
-             
+
             <div class="d-flex flex-column gap-3 p-3 w-100">
 
                 <!-- RIGA SUPERIORE: titolo a sinistra, ricerca a destra -->
@@ -133,91 +133,6 @@
                 </div>
 
             </div>
-        </div>
-         
-
-         <div id="on-sell" class=" d-flex p-2 flex-column" style="width:95%">
-            <h1>Vendita Libri</h1>
-
-            <%-- DIALOG PER INSERIRE NUOVI LIBRI--%>
-            <div id="addBooksDialog" title="Aggiungi libri:">                
-            </div>
-
-
-         <div id="on-sell" class=" d-flex p-2 flex-column" style="width:95%">
-            <h1>Vendita Libri</h1>
-
-            <%-- DIALOG PER INSERIRE NUOVI LIBRI--%>
-            <div id="addBooksDialog" title="Aggiungi libri:">                
-            </div>
-
-            <%-- ELENCO DI IMMAGINI - LO FACCIAMO CON UN REPEATER --%>
-            <div class="d-flex flex-wrap gap-3 p-4 mt-3">
-
-
-                <div>
-                    <img src="/Images/copertine/barack.jpeg" alt="Alternate Text" style="border-radius: 5px;" />
-                    <div class="mt-2 text-muted line " style="line-height: 10px;">
-                        <p>A Promise Land</p>
-                        <p>Barack Obama</p>
-                    </div>
-                </div>
-
-
-                <div>
-                    <img src="/Images/copertine/barack.jpeg" alt="Alternate Text" style="border-radius: 5px;" />
-                    <div class="mt-2 text-muted line " style="line-height: 10px;">
-                        <p>A Promise Land</p>
-                        <p>Barack Obama</p>
-                    </div>
-                </div>
-
-                <div>
-                    <div class=" text-muted line " style="line-height: 10px;">
-
-                        <%-- BOTTONE CHE APRE UN DIALOG PER INSERIRE NUOVI LIBRI --%>
-                        <asp:Button type="button" CssClass="btn btn-primary vertical-btn" Text="+" OnClientClick="openDialog('#dialog-scambio','/AddBook.aspx','Aggiungi Libro',1200,500); return false;" runat="server"></asp:Button>
-                                                
-                       
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-    <asp:GridView ID="GrdBook" AutoGenerateColumns="true" runat="server"></asp:GridView>
-
-
-                <div>
-                    <img src="/Images/copertine/barack.jpeg" alt="Alternate Text" style="border-radius: 5px;" />
-                    <div class="mt-2 text-muted line " style="line-height: 10px;">
-                        <p>A Promise Land</p>
-                        <p>Barack Obama</p>
-                    </div>
-                </div>
-
-
-                <div>
-                    <img src="/Images/copertine/barack.jpeg" alt="Alternate Text" style="border-radius: 5px;" />
-                    <div class="mt-2 text-muted line " style="line-height: 10px;">
-                        <p>A Promise Land</p>
-                        <p>Barack Obama</p>
-                    </div>
-                </div>
-
-                <div>
-                    <div class=" text-muted line " style="line-height: 10px;">
-
-                        <%-- BOTTONE CHE APRE UN DIALOG PER INSERIRE NUOVI LIBRI --%>
-                        <asp:Button type="button" CssClass="btn btn-primary vertical-btn" Text="+" OnClientClick="openDialog('#dialog-scambio','/AddBook.aspx','Aggiungi Libro',1200,500); return false;" runat="server"></asp:Button>
-                                                
-                       
-                    </div>
-                </div>
-
-            </div>
-
         </div>
 
     </div>
