@@ -17,7 +17,7 @@
 </script>
 
     <style>
-        body {
+        body { 
             background-color: var(--bg);
         }
 
@@ -56,7 +56,7 @@
 
 
             <%-- ELENCO DI IMMAGINI - LO FACCIAMO CON UN REPEATER --%>
-
+             
             <div class="d-flex flex-column gap-3 p-3 w-100">
 
                 <!-- RIGA SUPERIORE: titolo a sinistra, ricerca a destra -->
