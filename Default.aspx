@@ -1,4 +1,4 @@
-﻿<%@ Page Title="BiblioNet" Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.vb" Inherits="BiblioNet._Default" %>
+<%@ Page Title="BiblioNet" Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.vb" Inherits="BiblioNet._Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -55,8 +55,11 @@
             </div>
         </div>
 
-        <!-- SCAMBIO LIBRI -->
-        <div id="on-loan" class="d-flex p-2 flex-column w-100">
+        <div id="on-loan" class=" d-flex p-2 flex-column">
+
+
+            <%-- ELENCO DI IMMAGINI - LO FACCIAMO CON UN REPEATER --%>
+
             <div class="d-flex flex-column gap-3 p-3 w-100">
 
                 <!-- Titolo e ricerca -->
@@ -127,11 +130,13 @@
             </div>
         </div>
 
-        <!-- IMPORT -->
-        <asp:Panel ID="PnlImport" runat="server">
-            <div class="d-flex w-100 p-2 gap-4 flex-column align-items-center">
-                <div id="import" class="d-flex p-2 flex-column" style="width: 95%;">
-                    <h1>IMPORT</h1>
+    </div>
+
+    <asp:Panel ID="PnlImport" runat="server">
+        <div class="d-flex w-100 p-2 gap-4 flex-column align-items-center ">
+
+            <div id="import" class=" d-flex p-2 flex-column" style="width: 95%">
+                <h1>IMPORT</h1>
 
                     <div class="d-flex flex-column gap-2">
                         <asp:Label Text="Inserisci una categoria" runat="server" /> 
