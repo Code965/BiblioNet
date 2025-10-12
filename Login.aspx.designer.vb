@@ -11,41 +11,41 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class SiteMaster
+Partial Public Class Login
 
     '''<summary>
-    '''Controllo BtnRegister.
+    '''Controllo TxtEmail.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnRegister As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents TxtEmail As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo btnDropDown.
+    '''Controllo TxtPassword.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents btnDropDown As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents TxtPassword As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo lnkLogout.
+    '''Controllo BtnSignIn.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents lnkLogout As Global.System.Web.UI.WebControls.LinkButton
+    Protected WithEvents BtnSignIn As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Controllo MainContent.
+    '''Controllo ChkRememberMe.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents MainContent As Global.System.Web.UI.WebControls.ContentPlaceHolder
+    Protected WithEvents ChkRememberMe As Global.System.Web.UI.WebControls.CheckBox
 End Class

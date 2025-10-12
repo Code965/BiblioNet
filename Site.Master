@@ -1,8 +1,9 @@
-﻿<%@ Register TagPrefix="webopt"
+﻿﻿<%@ Register TagPrefix="webopt"
     Namespace="Microsoft.AspNet.Web.Optimization.WebForms"
     Assembly="Microsoft.AspNet.Web.Optimization.WebForms" %>
 
 <%@ Master Language="VB" AutoEventWireup="true" CodeBehind="Site.master.vb" Inherits="BiblioNet.SiteMaster" %>
+
 <%@ Import Namespace="System.Web.Optimization" %>
 
 <!DOCTYPE html>
@@ -20,10 +21,10 @@
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="/Content/site.css" rel="stylesheet" />
+    <script src="/Scripts/js/globalFunction.js"></script>
 
-    <%-- Per il dropdown bootstrap --%>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+
+
 
 </head>
 <body>
@@ -52,7 +53,7 @@
         <script>
 
             $(document).ready(function () {
-               
+
                 //$("#myDropdown").on("mouseenter", function () {
                 //    $(this).addClass("open");
                 //});
@@ -62,6 +63,7 @@
                 //});
 
                 let closeTimeout;
+
 
                 $("#myDropdown").on("mouseenter", function () {
                     clearTimeout(closeTimeout); // annulla eventuale chiusura
@@ -75,6 +77,8 @@
                     }, 200); // aspetta 200ms prima di chiudere
                 });
 
+
+
             });
 
         </script>
@@ -84,7 +88,7 @@
             <div class="shadow-sm sidebar" style="width: 17%;">
 
                 <%-- LOGO --%>
-                <div id="Logo" class="d-flex align-items-center gap-1 p-4 " >
+                <div id="Logo" class="d-flex align-items-center gap-1 p-4 ">
                     BIBLIONET <span id="logo-span">Library</span>
                 </div>
 
@@ -92,17 +96,16 @@
                 <div>
 
                     <ul id="nav-list" class="d-flex flex-column  ">
-                        <li><a href="Default.aspx">Dashboard</a></li>
                         <li>
                             <a href="Scambio.aspx">Scambio</a></li>
                         <li>
                         <li>
-                        <a href="Catalogo.aspx">Catalogo</a>
+                            <a href="Catalogo.aspx">Catalogo</a>
                         </li>
                     </ul>
                 </div>
 
-                <div class="box-event d-flex flex-column justify-content-center p-4 ms-3 mb-3" style="margin-top:381px;">
+                <div class="box-event d-flex flex-column justify-content-center p-4 ms-3 mb-3" style="margin-top: 381px;">
                     <h6 class="muted-600">UPCOMING EVENTS
                     </h6>
 
@@ -118,21 +121,21 @@
                 <nav class="navbar w-100 mb-3 p-2 navbar-expand-lg navbar-light bg-white shadow-sm">
                     <div class="d-flex w-100 justify-content-between">
 
-                        <div class="d-flex gap-5" style="border-right: 1px solid black; width:92%">
+                        <div class="d-flex gap-5" style="border-right: 1px solid black; width: 92%">
 
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
 
-                            <div style="position: relative; width: 250px;">
+                            <div style="position: relative; width: 250px;" id="searchInput">
                                 <img src="/Images/Icons/search.png"
                                     style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px;" />
                                 <input
                                     type="text"
                                     class="form-control-plaintext"
                                     placeholder="Cerca il tuo prossimo libro..."
-                                    style="padding-left: 35px; max-width:none; width: 100%;" />
+                                    style="padding-left: 35px; max-width: none; width: 100%;" />
                             </div>
 
 
@@ -140,15 +143,24 @@
 
                         <div class="collapse navbar-collapse d-flex " id="navbarNav">
                             <div class="dropdown" id="myDropdown">
-                                <button id="btnDropDown" class="btn">
+                                <asp:LinkButton ID="btnDropDown" runat="server" CssClass="btn" OnClick="btnDropDown_Click">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                                         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                                         <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                                     </svg>
-                                    nome
-                                </button>
+                                    <%= If(Session("name") IsNot Nothing, Session("name"), "Guest") %>
+                                </asp:LinkButton>
                                 <ul class="dropdown-menu">
-                                    <li><a href="/Login.aspx">Login</a></li>                                    
+
+                                    <li>
+                                        <% If Session("name") IsNot Nothing Then %>
+                                        <asp:LinkButton ID="lnkLogout" runat="server" OnClick="lnkLogout_Click" CssClass="dropdown-item">Logout</asp:LinkButton>
+                                        <% Else %>
+                                        <a href="/Login.aspx" class="dropdown-item">Login</a>
+                                        <% End If %>
+                                    </li>
+
+
                                 </ul>
                             </div>
                         </div>
@@ -156,7 +168,7 @@
                 </nav>
 
 
-                <asp:ContentPlaceHolder ID="MainContent" runat="server">                    
+                <asp:ContentPlaceHolder ID="MainContent" runat="server">
                     <%-- Tutto quello che ha MainContent butta qui --%>
                 </asp:ContentPlaceHolder>
 

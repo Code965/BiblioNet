@@ -11,113 +11,113 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class _Default
+Partial Public Class Register
 
     '''<summary>
-    '''Controllo litProgress.
+    '''Controllo TxtName.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents litProgress As Global.System.Web.UI.WebControls.Literal
+    Protected WithEvents TxtName As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo BtnMonthBook.
+    '''Controllo TxtSurname.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnMonthBook As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents TxtSurname As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo TxtSearchBook.
+    '''Controllo TxtEmail.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents TxtSearchBook As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents TxtEmail As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo BtnApply.
+    '''Controllo TxtPassword.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnApply As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents TxtPassword As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo RptExchange.
+    '''Controllo TxtPhone.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents RptExchange As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents TxtPhone As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo BtnOpenDialogBook.
+    '''Controllo TxtCF.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnOpenDialogBook As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents TxtCF As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo PnlImport.
+    '''Controllo DrpCountry.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents PnlImport As Global.System.Web.UI.WebControls.Panel
+    Protected WithEvents DrpCountry As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Controllo TxtCategories.
+    '''Controllo DrpRegion.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents TxtCategories As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents DrpRegion As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Controllo BtnImportBook.
+    '''Controllo DrpProvince.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnImportBook As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents DrpProvince As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Controllo BtnDeleteDuplicates.
+    '''Controllo DrpCity.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnDeleteDuplicates As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents DrpCity As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Controllo BtnAddAuthor.
+    '''Controllo DrpCap.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnAddAuthor As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents DrpCap As Global.System.Web.UI.WebControls.DropDownList
 
     '''<summary>
-    '''Controllo BtnReload.
+    '''Controllo BtnRegister.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnReload As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents BtnRegister As Global.System.Web.UI.WebControls.Button
 End Class

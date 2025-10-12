@@ -16,7 +16,7 @@ Namespace Database
         '3) Creo un metodo Build che mi crea la query finale
 
         ' Connection string dal Web.config
-        Private connStr As String = ConfigurationManager.ConnectionStrings("biblionet").ConnectionString
+        Private ReadOnly connStr As String = ConfigurationManager.ConnectionStrings("biblionet").ConnectionString
 
         ' Attributi della classe MySql
         Public Property _Select As String
@@ -28,6 +28,7 @@ Namespace Database
         Public Property _OrderBy As String
         Public Property _GroupBy As String
 
+        Public Property _Sql As String
 
         'Costruttore
 
@@ -65,6 +66,12 @@ Namespace Database
             Return Me
         End Function
 
+        Public Function WhereLike(columnOne As String, value As String) As MySql
+            _Where = "WHERE " & columnOne & " LIKE '%" & value & "%'"
+            Return Me
+        End Function
+
+
         ' ORDER BY
         Public Function OrderBy(columns As String) As MySql
             _OrderBy = "ORDER BY " & columns
@@ -81,6 +88,24 @@ Namespace Database
             _Insert = "INSERT INTO " & table & " ( " & columns & ") VALUES (" & values & ")"
             Return Me
         End Function
+        Public Function Update(table As String, setClause As String) As MySql
+            _Update = "UPDATE " & table & " SET " & setClause
+            Return Me
+        End Function
+
+
+        Public Function DeleteFrom(table As String) As MySql
+            _Delete = "DELETE FROM " & table
+            Return Me
+        End Function
+
+        Public Function InsertMultipleRows(table As String, columns As String, valuesList As List(Of String)) As MySql
+            Dim allValues As String = String.Join(", ", valuesList)
+            _Insert = $"INSERT INTO {table} ({columns}) VALUES {allValues}"
+            Return Me
+        End Function
+
+
 
         ' SQL finale
         Public Function Build() As String
@@ -98,9 +123,98 @@ Namespace Database
             If Not String.IsNullOrEmpty(_Where) Then parts.Add(_Where)
             If Not String.IsNullOrEmpty(_OrderBy) Then parts.Add(_OrderBy)
             If Not String.IsNullOrEmpty(_GroupBy) Then parts.Add(_GroupBy)
+            If Not String.IsNullOrEmpty(_Delete) Then parts.Add(_Delete)
+            If Not String.IsNullOrEmpty(_Update) Then parts.Add(_Update)
 
             'Mi crea la query finale
             Return String.Join(" ", parts)
+        End Function
+
+        'Esegue una query sql che gli passo come stringa
+        Public Function Sql(query As String) As MySql
+            _Sql = query
+            Return Me
+        End Function
+
+        Public Sub Reset()
+
+            'Svuoto i vari valori
+            'In questo modo quando fa la build ho tutto vuoto per poi resettarli
+            Me._Select = ""
+            Me._Delete = ""
+            Me._Insert = ""
+            Me._Where = ""
+            Me._GroupBy = ""
+            Me._OrderBy = ""
+            Me._Update = ""
+            Me._From = ""
+
+        End Sub
+
+
+        'RITORNO DEI VALORI
+
+        Public Function ToList(Of T As New)() As List(Of T)
+            Dim sql = Build()
+            Dim list As New List(Of T)()
+            Using conn As New MySqlConnection(connStr)
+                Using cmd As New MySqlCommand(sql, conn)
+                    conn.Open()
+                    Using reader = cmd.ExecuteReader()
+                        While reader.Read()
+                            Dim obj As New T()
+                            For Each prop In GetType(T).GetProperties()
+                                If ColumnExists(reader, prop.Name) AndAlso Not IsDBNull(reader(prop.Name)) Then
+                                    prop.SetValue(obj, Convert.ChangeType(reader(prop.Name), prop.PropertyType))
+                                End If
+                            Next
+                            list.Add(obj)
+                        End While
+                    End Using
+                End Using
+            End Using
+            Return list
+        End Function
+
+        Public Function ToObj(Of T As New)() As T
+            Dim sql = Build()
+            Using conn As New MySqlConnection(connStr)
+                Using cmd As New MySqlCommand(sql, conn)
+                    conn.Open()
+
+                    ' Se T è un tipo scalare
+                    If GetType(T).IsPrimitive OrElse GetType(T) Is GetType(String) OrElse GetType(T) Is GetType(Decimal) Then
+                        Dim result = cmd.ExecuteScalar()
+                        Return If(result Is Nothing OrElse IsDBNull(result), Nothing, CType(Convert.ChangeType(result, GetType(T)), T))
+                    End If
+
+                    ' Altrimenti assume che sia un oggetto complesso
+                    Using reader = cmd.ExecuteReader()
+                        If reader.Read() Then
+                            Dim obj As New T()
+                            For Each prop In GetType(T).GetProperties()
+                                If ColumnExists(reader, prop.Name) AndAlso Not IsDBNull(reader(prop.Name)) Then
+                                    prop.SetValue(obj, Convert.ChangeType(reader(prop.Name), prop.PropertyType))
+                                End If
+                            Next
+                            Return obj
+                        Else
+                            Return Nothing
+                        End If
+                    End Using
+
+                End Using
+            End Using
+        End Function
+
+        ' Funzione helper per verificare se la colonna esiste nel DataReader
+        Private Function ColumnExists(reader As MySqlDataReader, columnName As String) As Boolean
+            For i As Integer = 0 To reader.FieldCount - 1
+                If reader.GetName(i).Equals(columnName, StringComparison.OrdinalIgnoreCase) Then
+                    Return True
+                End If
+            Next
+            Return False
         End Function
 
 
@@ -113,6 +227,17 @@ Namespace Database
                     Dim dt As New DataTable()
                     dt.Load(cmd.ExecuteReader())
                     Return dt
+                End Using
+            End Using
+        End Function
+
+
+        'ESECUZIONE
+        Public Function ExecuteSql() As Integer
+            Using conn As New MySqlConnection(connStr)
+                Using cmd As New MySqlCommand(Me._Sql, conn)
+                    conn.Open()
+                    Return cmd.ExecuteNonQuery()
                 End Using
             End Using
         End Function

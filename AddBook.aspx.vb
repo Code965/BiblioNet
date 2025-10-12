@@ -1,4 +1,5 @@
 ﻿Imports BiblioNet.JsScript.JsHelper
+Imports BiblioNet.UsersModel
 
 Public Class AddBook
     Inherits System.Web.UI.Page
@@ -52,8 +53,8 @@ Public Class AddBook
 
         Try
 
-            q.InsertInto("books",
-             "title, author_id, publisher_id, isbn, description, price, stock_quantity, category_id, cover_image_url, publication_date, genres, created_at, updated_at",
+            q.InsertInto("books_personal",
+             "title, author_id, publisher_id, isbn, description, price, stock_quantity, category_id, cover_image_url, publication_date, genres, user_id, created_at, updated_at",
              "'" & titolo & "', " &
              "'" & autore & "', " &
              "'" & edizione & "', " &
@@ -65,10 +66,11 @@ Public Class AddBook
              "'" & img & "', " &
              "'" & dataPubblicazione & "', " &
              "'" & genere & "', " &
+             "'" & CurrentUser.UserId & "', " &
              "NOW(), " &
              "NOW()").ExecuteNonQuery()
 
-
+            AddJScript("$('#BtnReload').click();")
 
         Catch ex As Exception
             Throw New Exception("Errore durante l'inserimento del libro: " & ex.Message)
