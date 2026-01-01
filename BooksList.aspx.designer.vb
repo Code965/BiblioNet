@@ -11,14 +11,14 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class Scambio
+Partial Public Class BooksList
 
     '''<summary>
-    '''Controllo RptUsers.
+    '''Controllo RptBookDetails.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents RptUsers As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents RptBookDetails As Global.System.Web.UI.WebControls.Repeater
 End Class

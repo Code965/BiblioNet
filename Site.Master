@@ -21,10 +21,6 @@
     <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="/Content/site.css" rel="stylesheet" />
-    <script src="/Scripts/js/globalFunction.js"></script>
-
-
-
 
 </head>
 <body>
@@ -46,25 +42,173 @@
                 <asp:ScriptReference Name="WebFormsBundle" />
                 <%--Site Scripts--%>
             </Scripts>
-
-
         </asp:ScriptManager>
+
+
+        <style>
+            /* Stile base popup */
+            .custom-popup {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                pointer-events: none; /* eviti click prima che sia visibile */
+            }
+
+                /* Popup nascosto */
+                .custom-popup.hidden {
+                    display: none;
+                }
+
+            /* Contenuto popup con animazione e shadow */
+            .popup-content {
+                background: #fff;
+                padding: 30px;
+                border-radius: 16px; /* border radius più grande */
+                max-width: 600px; /* più largo */
+                width: 90%; /* responsivo */
+                box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* ombra */
+                transform: scale(0.5); /* piccolo all’inizio */
+                opacity: 0;
+                transition: transform 0.3s ease, opacity 0.3s ease; /* animazione */
+            }
+
+            /* Quando popup visibile */
+            .custom-popup.show .popup-content {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            /* Titolo e testo */
+            #confirm-popup-title,
+            #message-popup-title {
+                margin-top: 0;
+                font-size: 1.5rem;
+            }
+
+            #confirm-popup-text,
+            #message-popup-text {
+                font-size: 1rem;
+                margin: 1em 0;
+            }
+
+            /* Pulsanti */
+            .popup-actions button,
+            #message-popup-close {
+                border-radius: 8px;
+                transition: transform 0.2s;
+            }
+
+                .popup-actions button:hover,
+                #message-popup-close:hover {
+                    transform: scale(1.05);
+                }
+
+            /* Icone messaggi */
+            #message-popup-icon img {
+                width: 60px;
+                height: 60px;
+                display: block;
+                margin: 0 auto 15px auto;
+            }
+
+            /* SELECT2*/
+            /* wrapper */
+            #searchInput {
+                position: relative;
+                margin-left: 30px;
+            }
+
+                /* container Select2 */
+                #searchInput .select2-container {
+                    width: 470% !important;
+                }
+
+
+
+
+            .select2-search-choice {
+                padding: 10px !important;
+            }
+
+                .select2-search-choice div {
+                    margin-left: 10px;
+                    font-weight: 500;
+                }
+
+            /* === Contenitore principale (equivalente di .select2-selection--multiple) === */
+            .select2-container-multi .select2-choices {
+                border: none !important;
+                box-shadow: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+            }
+
+            /* === Campo di ricerca interno (equivalente di .select2-search__field) === */
+            .select2-container-multi .select2-search-field input {
+                margin-top: 6px !important;
+                line-height: normal !important;
+                border: none !important;
+                box-shadow: none !important;
+                background: transparent !important;
+            }
+
+                /* (opzionale) rimuove focus outline brutto */
+                .select2-container-multi .select2-search-field input:focus {
+                    outline: none !important;
+                }
+        </style>
 
         <script>
 
+            //Variabile globale per gestire finestre modali
+            var BiblionetMainWindow = window;
+
             $(document).ready(function () {
-
-                //$("#myDropdown").on("mouseenter", function () {
-                //    $(this).addClass("open");
-                //});
-
-                //$("#myDropdown").on("mouseleave", function () {
-                //    $(this).removeClass("open");
-                //});
 
                 let closeTimeout;
 
+                //Al click parte un evento di ricerca
+                function doSearch() {
+                    let raw = $('#<%= BtnGlobalSearch.ClientID %>').val(); // valori selezionati
+                    if (!raw) {
+                        window.location.href = 'BooksList.aspx';
+                        return;
+                    }
 
+                    let ids = raw
+                        .split(',')
+                        .map(x => x.trim())
+                        .filter(x => x !== '');
+
+                    if (ids.length === 0) {
+                        window.location.href = 'BooksList.aspx';
+                        return;
+                    }
+
+                    window.location.href = 'BooksList.aspx?ids=' + encodeURIComponent(ids.join('-'));
+                }
+
+                // Click sull'immagine
+                $("#imgIconSearch").on("click", doSearch);
+
+                // Invio nell'input Select2
+                $('#BtnGlobalSearch').on('select2-open', function () { // quando Select2 si apre
+                    $('.select2-input').on('keydown', function (e) {   // intercetta il vero input
+                        if (e.key === "Enter") {
+                            e.preventDefault();
+                            doSearch();
+                        }
+                    });
+                });
+
+                //Gestione apertura/chiusura dropdown al passaggio del mouse
                 $("#myDropdown").on("mouseenter", function () {
                     clearTimeout(closeTimeout); // annulla eventuale chiusura
                     $(this).addClass("open");
@@ -78,10 +222,106 @@
                 });
 
 
+                $("#nav-list .nav-item").hover(
+                    function () {
+                        if ($(this).find(".orange-box").length === 0) {
+                            $(this).append('<div class="orange-box"></div>');
+                        }
+                    },
+                    function () {
+                        $(this).find(".orange-box").remove();
+                    }
+                );
 
+                //Select2 per la ricerca globale
+                var path = window.location.pathname.split('/').pop().toLowerCase();
+
+                $('#BtnGlobalSearch').select2({
+                    placeholder: "Cerca il tuo prossimo libro...",
+                    multiple: true,
+                    ajax: {
+                        url: 'Default.aspx?action=GetBooks',
+                        type: "GET",
+                        dataType: 'json',
+                        delay: 250,
+                        data: function (term, page) { // <--- Cambia la firma qui
+                            console.log('Termine digitato:', term); // DEBUG: ora 'term' avrà il valore
+
+                            return {
+                                q: term,              // Usa 'term' direttamente
+                                page: page || 1,
+                                context: path
+                            };
+                        },
+                        processResults: function (data) {
+                            // mappa direttamente i risultati
+                            return {
+                                results: data.results || []
+                            };
+                        }
+                    },
+                    initSelection: function (element, callback) {
+
+                        var ids = $(element[0]).val(); // prendi gli ID dal campo
+
+                        if (!ids) return;
+
+                        var idArray = ids.split(','); // array di ID
+
+                        // AJAX per ottenere i dati completi
+                        $.ajax({
+                            url: 'Default.aspx?action=GetBooks&ids=' + ids,
+                            type: 'GET',
+                            dataType: 'json',
+                            data: { ids: idArray.join(',') }, // invio tutti gli ID al server
+                            success: function (data) {
+
+                                if (data.results && data.results.length > 0) {
+                                    callback(data.results); // mostra tutti i libri già selezionati
+
+                                    // memorizza l'ultimo selezionato
+                                    var lastSelected = data.results[data.results.length - 1];
+                                    console.log("Ultimo selezionato:", lastSelected);
+                                    // se vuoi, puoi salvarlo in una variabile globale o in un input nascosto
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error("Errore AJAX:", error);
+                            }
+                        });
+                    }
+
+
+                    //initSelection: function (element, callback) {
+                    //    var ids = $(element[0]).val(); // prendi gli ID dal campo
+                    //    if (!ids) return;
+
+                    //    var idArray = ids.split(','); // array di ID
+
+                    //    // AJAX per ottenere i dati completi
+                    //    $.ajax({
+                    //        url: 'Default.aspx?action=GetBooks',
+                    //        type: 'GET',
+                    //        dataType: 'json',
+                    //        data: { ids: idArray.join(',')}, // invio gli ID al server
+                    //        success: function (data) {
+
+                    //            alert(JSON.stringify(data)); // DEBUG: mostra i dati ricevuti)
+                    //            callback(data); // Select2 mostra i valori selezionati
+                    //        },
+                    //        error: function (xhr, status, error) {
+                    //            console.error("Errore AJAX:", error);
+                    //        }
+                    //    });
+                    //}
+
+
+                });
             });
 
         </script>
+        <script src="/Scripts/js/Default.js"></script>
+
 
         <div class="d-flex">
 
@@ -93,25 +333,22 @@
                 </div>
 
                 <%-- Menu laterale --%>
-                <div>
-
-                    <ul id="nav-list" class="d-flex flex-column  ">
-                        <li>
-                            <a href="Scambio.aspx">Scambio</a></li>
-                        <li>
-                        <li>
-                            <a href="Catalogo.aspx">Catalogo</a>
+                <div class="d-flex flex-column justify-content-between" style="height: 1289px;">
+                    <ul id="nav-list" class="d-flex flex-column list-unstyled p-0">
+                        <li class="nav-item">
+                            <a href="Scambio.aspx" class="nav-link">Scambio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="Catalogo.aspx" class="nav-link">Catalogo</a>
                         </li>
                     </ul>
-                </div>
 
-                <div class="box-event d-flex flex-column justify-content-center p-4 ms-3 mb-3" style="margin-top: 381px;">
-                    <h6 class="muted-600">UPCOMING EVENTS
-                    </h6>
-
-                    <h3 class="white-text">Words on Wednesday</h3>
-                    <p class="white-text">Register for our ongoing programs, as well as more health and wellness</p>
-                    <asp:Button ID="BtnRegister" Text="Register" runat="server" />
+                    <div class="box-event d-flex flex-column justify-content-center p-4 ms-3 mb-3">
+                        <h6 class="muted-600">UPCOMING EVENTS</h6>
+                        <h3 class="white-text">Words on Wednesday</h3>
+                        <p class="white-text">Register for our ongoing programs, as well as more health and wellness</p>
+                        <asp:Button ID="BtnRegister" Text="Register" runat="server" />
+                    </div>
                 </div>
             </div>
 
@@ -121,23 +358,20 @@
                 <nav class="navbar w-100 mb-3 p-2 navbar-expand-lg navbar-light bg-white shadow-sm">
                     <div class="d-flex w-100 justify-content-between">
 
-                        <div class="d-flex gap-5" style="border-right: 1px solid black; width: 92%">
+                        <div id="searchBlock" class="d-flex gap-5" style="border-right: 1px solid black; width: 92%">
 
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
 
-                            <div style="position: relative; width: 250px;" id="searchInput">
-                                <img src="/Images/Icons/search.png"
-                                    style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px;" />
-                                <input
-                                    type="text"
-                                    class="form-control-plaintext"
-                                    placeholder="Cerca il tuo prossimo libro..."
-                                    style="padding-left: 35px; max-width: none; width: 100%;" />
-                            </div>
 
+                            <img id="imgIconSearch" src="/Images/Icons/search.png"
+                                style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px;" />
+
+                            <div class="d-flex gap-2" style="position: relative; width: 97%;" id="searchInput">
+                                <asp:TextBox ID="BtnGlobalSearch" runat="server"></asp:TextBox>
+                            </div>
 
                         </div>
 
@@ -181,7 +415,50 @@
 
         </div>
 
+
+        <!-- POPUP DI MESSAGGIO -->
+        <div id="message-popup" class="custom-popup hidden">
+            <div class="popup-content">
+                <%--                <span id="message-popup-close">&times;</span>--%>
+
+                <div id="message-popup-icon"></div>
+                <h5 id="message-popup-title" class="text-center"></h5>
+                <p id="message-popup-text" class="text-center"></p>
+                <div class="w-100 d-flex justify-content-end">
+                    <button type="button" id="BtnOk" onclick="BiblionetMainWindow.ClosePopup();" class="btn btn-primary">
+                        Ok
+                    </button>
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- POPUP DI CONFERMA -->
+        <div id="confirm-popup" class="custom-popup hidden">
+            <div class="popup-content">
+                <h5 id="confirm-popup-title"></h5>
+                <p id="confirm-popup-text"></p>
+
+                <div class="popup-actions">
+                    <button type="button" id="confirm-popup-cancel" class="btn btn-secondary">
+                        Annulla
+                    </button>
+                    <button type="button" id="confirm-popup-confirm" class="btn btn-danger">
+                        Conferma
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </form>
+
+    <%--    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>--%>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.4/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.4/select2.min.js"></script>
+
+
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/Scripts/bootstrap.js") %>
     </asp:PlaceHolder>

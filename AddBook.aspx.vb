@@ -45,7 +45,8 @@ Public Class AddBook
            String.IsNullOrEmpty(genere) Then
 
             ' Mostra messaggio di errore
-            AddJScript("alert(' Tutti i campi obbligatori devono essere compilati.')")
+            AddJScript("alert('Tutti i campi obbligatori devono essere compilati.')")
+
             Exit Sub
         End If
 
@@ -70,7 +71,10 @@ Public Class AddBook
              "NOW(), " &
              "NOW()").ExecuteNonQuery()
 
-            AddJScript("$('#BtnReload').click();")
+            'Mostra messaggio di successo
+            AddJScript("BiblionetMainWindow.show_success_message('Libro aggiunto con successo!')")
+
+
 
         Catch ex As Exception
             Throw New Exception("Errore durante l'inserimento del libro: " & ex.Message)
