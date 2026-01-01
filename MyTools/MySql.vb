@@ -138,6 +138,7 @@ Namespace Database
 
         ' SQL finale
         Public Function Build() As String
+
             Dim parts As New List(Of String)
 
             ' Aggiungo i pezzi nell'ordine corretto
