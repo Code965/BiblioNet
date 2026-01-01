@@ -123,6 +123,7 @@
     <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
@@ -179,6 +180,8 @@
     <Import Include="System.Web.UI.HtmlControls" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BooksList.aspx" />
+    <Content Include="Details.aspx" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-grid.rtl.css" />
@@ -196,6 +199,7 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Global.asax" />
+    <Content Include="Log\LogImport.txt" />
     <Content Include="Register.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="AddBook.aspx" />
@@ -203,6 +207,7 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Catalogo.aspx" />
+    <Content Include="BiblionetImport.aspx" />
     <Content Include="Scambio.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -215,7 +220,7 @@
     <Content Include="Scripts\jquery-3.7.0.min.js" />
     <Content Include="Scripts\jquery-3.7.0.slim.js" />
     <Content Include="Scripts\jquery-3.7.0.slim.min.js" />
-    <Content Include="Scripts\js\globalFunction.js" />
+    <Content Include="Scripts\js\Default.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\WebForms\DetailsView.js" />
     <Content Include="Scripts\WebForms\Focus.js" />
@@ -242,6 +247,21 @@
     <Content Include="Bundle.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\LogHelper.vb" />
+    <Compile Include="BooksList.aspx.designer.vb">
+      <DependentUpon>BooksList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BooksList.aspx.vb">
+      <DependentUpon>BooksList.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Details.aspx.designer.vb">
+      <DependentUpon>Details.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Details.aspx.vb">
+      <DependentUpon>Details.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
     <Compile Include="Default.aspx.designer.vb">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
@@ -251,6 +271,7 @@
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="LogHelper.vb" />
     <Compile Include="Models\Users.vb" />
     <Compile Include="Register.aspx.designer.vb">
       <DependentUpon>Register.aspx</DependentUpon>
@@ -306,6 +327,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="BiblionetImport.aspx.designer.vb">
+      <DependentUpon>BiblionetImport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="BiblionetImport.aspx.vb">
+      <DependentUpon>BiblionetImport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Scambio.aspx.designer.vb">
       <DependentUpon>Scambio.aspx</DependentUpon>
@@ -399,6 +427,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Dialogs\" />
+    <Folder Include="Dialog\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="MyTools\MyTools.vbproj">

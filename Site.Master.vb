@@ -1,10 +1,17 @@
-﻿Public Class SiteMaster
+﻿Imports MyTools
+Imports BiblioNet.BookModels.Books
+Imports BiblioNet.BookModels
+
+Public Class SiteMaster
     Inherits MasterPage
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As EventArgs) Handles Me.Load
+
+
 
     End Sub
 
     Protected Sub lnkLogout_Click(sender As Object, e As EventArgs)
+
         ' Rimuove cookie e sessione
         FormsAuthentication.SignOut()
         Session.Clear()
@@ -15,7 +22,7 @@
         Context.ApplicationInstance.CompleteRequest()
     End Sub
 
-    Protected Sub btnDropDown_Click(sender As Object, e As EventArgs)
+    Protected Sub BtnDropDown_Click(sender As Object, e As EventArgs)
         If Session("name") IsNot Nothing Then
             Response.Redirect("Default.aspx")
         Else
@@ -23,5 +30,6 @@
         End If
 
     End Sub
+
 
 End Class

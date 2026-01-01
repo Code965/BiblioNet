@@ -1,12 +1,12 @@
 ﻿Imports System.Net
 Imports System.Net.WebRequestMethods
+Imports System.Security.Cryptography
 Imports BiblioNet.BookModels
 Imports BiblioNet.BookModels.Books
 Imports BiblioNet.JsScript.JsHelper
 Imports BiblioNet.UsersModel
 Imports BiblioNet.UsersModel.CurrentUser
 Imports Microsoft.Ajax.Utilities
-Imports Microsoft.AspNet.Web.Optimization.WebForms
 Imports MyTools
 Imports Newtonsoft.Json
 Imports Newtonsoft.Json.Linq
@@ -15,176 +15,36 @@ Public Class _Default
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
+        Dim action As String = Request.QueryString("action")
+        Dim ids As String = Request.QueryString("ids")
+
+        If action = "GetBooks" Then
+            ' Ottieni il termine di ricerca dalla QueryString
+            Dim searchTerm As String = Request.QueryString("q")
+            Dim context As String = Request.QueryString("context")
+
+            ' Passa il searchTerm alla funzione
+            Dim jsonResult As String = GetBooks(searchTerm, context, ids)
+
+            Response.Clear()
+            Response.ContentType = "application/json"
+            Response.Write(jsonResult)
+            Response.End()
+            Return
+        End If
+
+
         If Not Page.IsPostBack Then
             InitPage()
         End If
 
     End Sub
 
-    Protected Sub BtnApply_Click(sender As Object, e As EventArgs) Handles BtnApply.Click
-        Dim query As String = TxtSearchBook.Text.Trim()
-        InitRepeater(query)
-    End Sub
 
-
-    Protected Sub BtnImportBook_Click(sender As Object, e As EventArgs) Handles BtnImportBook.Click
-
-        Dim maxPagine As Integer = 3
-        Dim categoria = TxtCategories.Text
-        Dim q = New Database.MySql()
-        Dim client As New WebClient()
-        Dim count = 0
-        Dim list As New List(Of String)()
-
-        Response.Clear()
-        Response.BufferOutput = True
-        Response.ContentType = "text/html"
-
-        'Svuoto la tabella e poi inserisco
-
-        'q.Reset()
-
-        q.DeleteFrom("booksopenlibrary").ExecuteNonQuery()
-
-        For i As Integer = 1 To maxPagine
-            Try
-                Dim url As String = $"https://openlibrary.org/search.json?q={categoria}&page={i}"
-                Dim json As String = client.DownloadString(url)
-                Dim jObj As JObject = JObject.Parse(json)
-
-                If jObj("docs") IsNot Nothing AndAlso jObj("docs").HasValues Then
-                    Dim dt As DataTable = JsonConvert.DeserializeObject(Of DataTable)(jObj("docs").ToString())
-
-                    For Each row As DataRow In dt.Rows
-                        Dim title As String = If(Not IsDBNull(row("title")), row("title").ToString().Replace("'", "''"), "Titolo Sconosciuto")
-                        Dim subtitle As String = If(Not IsDBNull(row("subtitle")), row("subtitle").ToString().Replace("'", "''"), "")
-                        Dim coverEditionKey As String = If(Not IsDBNull(row("cover_edition_key")), row("cover_edition_key").ToString(), "")
-                        Dim cover_i As String = If(Not IsDBNull(row("cover_i")), row("cover_i").ToString(), "NULL")
-                        Dim ebookAccess As String = If(Not IsDBNull(row("ebook_access")), row("ebook_access").ToString(), "")
-                        Dim editionCount As String = If(Not IsDBNull(row("edition_count")), row("edition_count").ToString(), "NULL")
-                        Dim firstPublishYear As String = If(Not IsDBNull(row("first_publish_year")), row("first_publish_year").ToString(), "NULL")
-                        Dim hasFullText As String = If(Not IsDBNull(row("has_fulltext")) AndAlso CBool(row("has_fulltext")), "1", "0")
-
-                        Dim ia As String = If(Not IsDBNull(row("ia")),
-                             JsonConvert.SerializeObject(row("ia")).Replace("'", "''"),
-                             "[]")
-
-                        Dim iaCollection As String = If(Not IsDBNull(row("ia_collection_s")), row("ia_collection_s").ToString().Replace("'", "''"), "")
-                        Dim keyOpenLibrary As String = If(Not IsDBNull(row("key")), row("key").ToString(), "")
-
-
-                        Dim language As String = If(Not IsDBNull(row("language")),
-                             JsonConvert.SerializeObject(row("language")).Replace("'", "''"),
-                             "[]")
-
-                        Dim lendingEdition As String = If(Not IsDBNull(row("lending_edition_s")), row("lending_edition_s").ToString(), "")
-                        Dim lendingIdentifier As String = If(Not IsDBNull(row("lending_identifier_s")), row("lending_identifier_s").ToString(), "")
-                        Dim publicScan As String = If(Not IsDBNull(row("public_scan_b")) AndAlso CBool(row("public_scan_b")), "1", "0")
-
-                        Dim author_key As String = If(Not IsDBNull(row("author_key")),
-                             JsonConvert.SerializeObject(row("author_key")).Replace("'", "''"),
-                             "[]")
-                        Dim author_name As String = If(Not IsDBNull(row("author_name")),
-                               JsonConvert.SerializeObject(row("author_name")).Replace("'", "''"),
-                               "[]")
-
-                        Dim rowValues As String = $"('{title}', '{subtitle}', '{coverEditionKey}', {cover_i}, '{ebookAccess}', {editionCount}, {firstPublishYear}, {hasFullText}, '{ia}', '{iaCollection}', '{keyOpenLibrary}', '{language}', '{lendingEdition}', '{lendingIdentifier}', {publicScan}, '{author_key}', '{author_name}')"
-                        list.Add(rowValues)
-                        count = count + list.Count
-                    Next
-
-                    ' Inserisci nel DB dopo aver 
-                    q.Reset()
-                    Dim columnDb = "title,subtitle,cover_edition_key,cover_i,ebook_access,edition_count,first_publish_year,has_fulltext,ia,ia_collection_s,key_openlibrary,language,lending_edition_s,lending_identifier_s,public_scan_b,author_key,author_name"
-                    q.InsertMultipleRows("booksopenlibrary", columnDb, list).ExecuteNonQuery()
-
-                    Response.Write($"<div style='padding:4px; font-family:Arial;'>Pagina {i} completata: inserite {list.Count} righe.</div>")
-                    Response.Flush()
-                Else
-                    Response.Write($"<div style='color:red;'>Pagina {i} senza dati.</div>")
-                End If
-
-            Catch ex As Exception
-                Response.Write($"<div style='color:red;'>Errore inatteso nella pagina {i}: {ex.Message}</div>")
-                Exit For
-            End Try
-        Next
-
-        Response.Write($"<div style='color:green;'>Importazione completata. Inserite {count} righe</div>")
-        Response.Flush()
-    End Sub
-
-
-    'Importa i dati alla tabella Author
-    Protected Sub BtnAddAuthor_Click(sender As Object, e As EventArgs) Handles BtnAddAuthor.Click
-
-        Dim q = New Database.MySql()
-
-        'Prendo i valori dalla booksopenlibrary
-        q.Reset()
-        Dim dt = q.Select("*").From("booksopenlibrary").ToDataTable()
-        Dim listValueAuthor As New List(Of String)()
-
-        'Recupero gli autori
-        For Each row As DataRow In dt.Rows
-            Dim authorKeys As JArray = JArray.Parse(row("author_key").ToString())
-            Dim authorNames As JArray = JArray.Parse(row("author_name").ToString())
-
-            For i As Integer = 0 To authorKeys.Count - 1
-                ' Creiamo una riga singola per ogni autore
-                Dim key As String = authorKeys(i).ToString()
-                Dim name As String = authorNames(i).ToString()
-
-                ' Escape eventuali apostrofi nel nome
-                name = name.Replace("'", "''")
-
-                Dim rowValues As String = $"('{key}', '{name}', '')"
-                listValueAuthor.Add(rowValues)
-            Next
-        Next
-
-        'For Each row As DataRow In dt.Rows
-
-        '    Dim authorKeys As JArray = JArray.Parse(row("author_key").ToString())
-        '    Dim authorNames As JArray = JArray.Parse(row("author_name").ToString())
-
-        '    For i As Integer = 0 To authorKeys.Count - 1
-
-        '        Dim rowValues As String = $"('{authorKeys}', '{authorNames}', '')"
-        '        listValueAuthor.Add(rowValues)
-
-        '    Next
-
-
-        'Next
-
-        Try
-            Dim columnDb = "author_id,name,biography"
-            q.InsertMultipleRows("authors", columnDb, listValueAuthor).ExecuteNonQuery()
-
-        Catch ex As Exception
-            Throw New Exception("Errore" & q.Build())
-        End Try
-
-
-
-        'Dim sql As String = "INSERT INTO biblionet.authors (author_id, name) " &
-        '            "SELECT author_key, author_name " &
-        '            "FROM biblionet.booksopenlibrary;"
-
-        'q.Sql(sql).ExecuteSql()
-
-    End Sub
-
+#Region "Inizializzatori"
     Protected Sub InitPage()
 
-        Dim q As New Database.MySql()
 
-        If CurrentUser.IsAdmin Then
-            PnlImport.Visible = True
-        Else
-            PnlImport.Visible = False
-        End If
 
         InitRepeater()
 
@@ -197,15 +57,24 @@ Public Class _Default
 
         Dim listaLibri = Nothing
 
-        If titolo <> "" Then
-            listaLibri = q.Select("*").From("books_personal").WhereLike("title", titolo).ToList(Of Books)()
 
-
+        If Not String.IsNullOrWhiteSpace(titolo) Then
+            listaLibri = q.Select("*").
+        From("books_personal").
+        WhereLike("title", titolo).
+        ToList(Of Books)()
         Else
-            listaLibri = q.Select("*").From("books_personal").ToList(Of Books)()
-
+            listaLibri = q.Select("*").
+        From("books_personal").
+        ToList(Of Books)()
         End If
 
+
+        'If titolo <> "" Then
+        '    listaLibri = q.Select("*").From("books_personal").WhereLike("title", titolo).ToList(Of Books)()
+        'Else
+        '    listaLibri = q.Select("*").From("books_personal").ToList(Of Books)()
+        'End If
 
         ' Associo la lista al Repeater
         RptExchange.DataSource = listaLibri
@@ -214,13 +83,163 @@ Public Class _Default
     End Sub
 
 
-    Protected Sub BtnOpenDialogBook_Click(sender As Object, e As EventArgs)
+#End Region
 
-        'AddJScript("openDialog(""#dialog-scambio"", ""/AddBook.aspx"", 'Aggiungi Libro', '1200', '500');")
-
+#Region "Eventi Pulsanti"
+    Protected Sub BtnApply_Click(sender As Object, e As EventArgs) Handles BtnApply.Click
+        Dim query As String = TxtSearchBook.Text.Trim()
+        InitRepeater(query)
     End Sub
 
 
+
+#End Region
+
+#Region "Eventi Repeater"
+
+    Protected Sub RptExchange_ItemCommand(sender As Object, e As RepeaterCommandEventArgs) Handles RptExchange.ItemCommand
+
+        Select Case e.CommandName
+
+            Case "Edit"
+                Dim id As String = Convert.ToInt32(e.CommandArgument)
+                ' Apri modal / redirect / carica dati
+                EditBook(id)
+
+            Case "Delete"
+                Dim id As String = Convert.ToInt32(e.CommandArgument)
+                DeleteBook(id)
+                LoadRepeater() ' ricarica dati
+
+        End Select
+
+    End Sub
+
+#End Region
+
+#Region "Funzioni di supporto"
+    Protected Sub EditBook(bookId As Integer)
+        ' Logica per modificare il libro con l'ID specificato
+        ' Ad esempio, puoi reindirizzare a una pagina di modifica o aprire un modal
+        Response.Redirect($"EditBook.aspx?title={bookId}")
+    End Sub
+    Protected Sub DeleteBook(bookId As Integer)
+        Dim q = New Database.MySql()
+        q.DeleteFrom("books_personal").Where("id", "=", bookId).ExecuteNonQuery()
+    End Sub
+    Protected Sub LoadRepeater()
+        InitRepeater()
+    End Sub
+
+
+    Protected Function GetBooks(searchTerm As String, context As String, Optional ids As String = Nothing) As String
+        Dim q = New Database.MySql()
+        Dim listaLibri As List(Of Books) = Nothing
+
+        If ids IsNot Nothing Then
+            listaLibri = GetBooksFromDinamicTableByIds(ids, "books_library")
+        Else
+            Select Case context
+                Case "Scambio"
+                Case "Catalogo"
+                    listaLibri = GetBooksFromDinamicTable(searchTerm, "books_library")
+                Case Else
+                    listaLibri = GetBooksFromDinamicTable(searchTerm, "books_personal")
+            End Select
+
+        End If
+
+
+        ' Se non ci sono risultati
+        If listaLibri Is Nothing Then
+            Return "{""results"":[]}"
+        End If
+
+        ' Crea direttamente la risposta nel formato Select2
+        Dim response = New With {
+        .results = listaLibri.
+            Where(Function(l) l IsNot Nothing).
+            Select(Function(libro) New With {
+                .id = libro.Id,
+                .text = libro.Title
+            }).ToList()
+    }
+
+
+        Return Newtonsoft.Json.JsonConvert.SerializeObject(response)
+    End Function
+
+    Protected Function GetBooksFromDinamicTableByIds(ids As String, table As String) As List(Of Books)
+
+        Dim q = New Database.MySql()
+        Dim listaLibri As List(Of Books) = Nothing
+
+        Dim idArray = ids.Split(","c).Select(Function(x) x.Trim()).ToArray()
+
+        listaLibri = q.Select("*").
+              From(table).
+              Where("id", "IN", idArray.ToString).
+              ToList(Of Books)()
+
+        Return listaLibri
+
+    End Function
+
+    Protected Function GetBooksFromDinamicTable(searchTerm As String, table As String) As List(Of Books)
+
+        Dim q = New Database.MySql()
+        Dim listaLibri As List(Of Books) = Nothing
+
+        ' Costruisci la query con filtro WHERE se c'è un searchTerm
+        If Not String.IsNullOrEmpty(searchTerm) Then
+            ' Usa Replace per gestire gli apostrofi nel searchTerm
+            Dim safeSearchTerm As String = searchTerm.Replace("'", "''")
+
+            ' Costruisci la query con i %
+            Dim whereClause As String = String.Format("title LIKE '%{0}%' OR author_id LIKE '%{0}%'", safeSearchTerm)
+
+            listaLibri = q.Select("*").
+                From(table).
+                Where(whereClause).
+                ToList(Of Books)()
+        Else
+            ' Se non c'è ricerca, ritorna tutti i libri
+            listaLibri = q.Select("*").
+                From(table).
+                OrderBy("Title").
+                Limit("10").
+                ToList(Of Books)()
+        End If
+
+        Return listaLibri
+    End Function
+
+    'Protected Function GetBooksFromDinamicTable(searchTerm As String, table As String) As List(Of Books)
+    '    Dim q = New Database.MySql()
+    '    Dim listaLibri As List(Of Books) = Nothing
+    '    Dim query As String = "Title LIKE '%" & searchTerm & "%' OR AuthorID LIKE '%" & searchTerm & "%'"
+
+
+    '    ' Costruisci la query con filtro WHERE se c'è un searchTerm
+    '    If Not String.IsNullOrEmpty(searchTerm) Then
+    '        ' Filtra per titolo o altri campi
+    '        listaLibri = q.Select("*").
+    '            From(table).
+    '            Where(query).
+    '            ToList(Of Books)()
+    '    Else
+    '        ' Se non c'è ricerca, ritorna tutti i libri (o un subset)
+    '        listaLibri = q.Select("*").
+    '            From(table).
+    '            OrderBy("Title").
+    '            ToList(Of Books)()
+    '    End If
+
+    '    Return listaLibri
+    'End Function
+
+
+#End Region
 
 
 End Class

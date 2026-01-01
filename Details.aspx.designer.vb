@@ -11,14 +11,5 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class Scambio
-
-    '''<summary>
-    '''Controllo RptUsers.
-    '''</summary>
-    '''<remarks>
-    '''Campo generato automaticamente.
-    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-    '''</remarks>
-    Protected WithEvents RptUsers As Global.System.Web.UI.WebControls.Repeater
+Partial Public Class Details
 End Class
