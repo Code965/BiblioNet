@@ -11,13 +11,30 @@
     <link href="/Content/site.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=book_5" />
 
+
     <script>
+        $(function () {
+            // ascolta il click sul logo
+            $("#Logo").on("click", function (e) {
+                if (e.ctrlKey) {
+                    openBiblionetImport();
+                }
+            });
+        });
+
+        function openBiblionetImport() {
+            window.open("BiblionetImport.aspx?", "_blank");
+        }
 
 
-</script>
+    </script>
+
+
+    <script src="/Scripts/js/Default.js"></script>
+
 
     <style>
-        body { 
+        body {
             background-color: var(--bg);
         }
 
@@ -28,6 +45,18 @@
             border: none;
             height: 40px;
             width: 150px;
+        }
+
+        .btn-custom {
+            background-color: var(--primary-900);
+            color: white;
+            border: none;
+            width: 100px;
+            height: 227px;
+            font-size: 24px;
+            text-align: center;
+            padding: 0;
+            border: 1px var(--primary-300) dashed;
         }
     </style>
 
@@ -61,7 +90,7 @@
 
                 <!-- RIGA SUPERIORE: titolo a sinistra, ricerca a destra -->
                 <div class="d-flex justify-content-between align-items-center w-100">
-                    <span class="h5 mb-0">Scambio Libri</span>
+                    <span class="h5 mb-0">Vendita Libri</span>
                     <div class="d-flex gap-2">
                         <asp:TextBox ID="TxtSearchBook" CssClass="form-control" placeholder="Cerca libro..." runat="server" />
                         <asp:Button Text="Aggiorna" ID="BtnApply" CssClass="btn btn-dark" runat="server" />
@@ -78,107 +107,135 @@
                                     <p class="mb-1"><%# Eval("Title") %></p>
                                     <p class="mb-0"><%# Eval("AuthorID") %></p>
                                 </div>
+
+                                <div class="d-flex align-items-center justify-content-center gap-3 w-100">
+
+
+                                    <asp:LinkButton
+                                        ID="BtnEditBookOnLoan"
+                                        runat="server"
+                                        CssClass="btn btn-dark d-flex align-items-center w-25"
+                                        ToolTip="Modifica"
+                                        CommandName="Edit"
+                                        CommandArgument='<%# Eval("id") %>'>                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                          <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                          <path fill-rule="evenodd" d="M1.05 3.5a.5.5 0 0 1 .5-.5h4.138l.5-.5H1.5a1.5 1.5 0 0 0-1.5 1.5v12.5A1.5 1.5 0 0 0 1.5 15.5h12.5a1.5 1.5 0 0 0 1.5-1.5V6.662l-.5.5V14.5a.5.5 0 0 1-.5.5H1.5a.5.5 0 0 1-.5-.5V3.5z"/>
+                                        </svg>
+                                    </asp:LinkButton>
+
+                                    <asp:LinkButton
+                                        ID="BtnDeleteBookOnLoan"
+                                        runat="server"
+                                        CssClass="btn btn-danger d-flex align-items-center w-25"
+                                        ToolTip="Elimina"
+                                        CommandName="Delete"
+                                        CommandArgument='<%# Eval("id") %>'
+                                        OnClientClick="return confirm('Sei sicuro di voler eliminare questo libro?');">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                          <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                        </svg>
+                                    </asp:LinkButton>
+                                </div>
+
                             </div>
                         </ItemTemplate>
                     </asp:Repeater>
 
-                    <!-- BOTTONE PER AGGIUNGERE NUOVI LIBRI -->
-                    <div class="d-flex align-items-center">
-                        <asp:Button
-                            type="button"
-                            ID="BtnOpenDialogBook"
-                            CssClass="btn btn-primary"
-                            Text="+"
-                            OnClientClick="openDialog('#dialog-scambio','/AddBook.aspx','Aggiungi Libro',1200,500); return false;"
-                            runat="server" />
-                    </div>
+                    <asp:Button
+                        type="button"
+                        ID="BtnOpenDialogBook"
+                        CssClass="btn-custom"
+                        Text="+"
+                        OnClientClick="BiblionetMainWindow.openDialog('#dialog-scambio','/AddBook.aspx','Aggiungi Libro',1200,500); return false;"
+                        runat="server" />
+
                 </div>
 
             </div>
         </div>
 
         <div id="on-sell" class=" d-flex p-2 flex-column" style="width: 95%">
-            <h1>Vendita Libri</h1>
 
-            <%-- DIALOG PER INSERIRE NUOVI LIBRI--%>
-            <div id="addBooksDialog" title="Aggiungi libri:">
-            </div>
+            <div class="d-flex flex-column gap-3 p-3 w-100">
 
-            <%-- ELENCO DI IMMAGINI - LO FACCIAMO CON UN REPEATER --%>
-            <div class="d-flex flex-wrap gap-3 p-4 mt-3">
-
-                <div>
-                    <img src="/Images/copertine/barack.jpeg" alt="Alternate Text" style="border-radius: 5px;" />
-                    <div class="mt-2 text-muted line " style="line-height: 10px;">
-                        <p>A Promise Land</p>
-                        <p>Barack Obama</p>
+                <!-- RIGA SUPERIORE: titolo a sinistra, ricerca a destra -->
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <span class="h5 mb-0">Scambio Libri</span>
+                    <div class="d-flex gap-2">
+                        <asp:TextBox ID="TxtSearchBookOnSell" CssClass="form-control" placeholder="Cerca libro..." runat="server" />
+                        <asp:Button Text="Aggiorna" ID="BtnApplyOnSell" CssClass="btn btn-dark" runat="server" />
                     </div>
                 </div>
 
-                <div>
-                    <img src="/Images/copertine/barack.jpeg" alt="Alternate Text" style="border-radius: 5px;" />
-                    <div class="mt-2 text-muted line " style="line-height: 10px;">
-                        <p>A Promise Land</p>
-                        <p>Barack Obama</p>
-                    </div>
-                </div>
+                <!-- REPEATER LIBRI -->
+                <div class="d-flex flex-wrap gap-3">
 
-                <div>
-                    <div class=" text-muted line " style="line-height: 10px;">
 
-                        <%-- BOTTONE CHE APRE UN DIALOG PER INSERIRE NUOVI LIBRI --%>
-                        <asp:Button type="button" CssClass="btn btn-primary vertical-btn" Text="+" OnClientClick="openDialog('#dialog-scambio','/AddBook.aspx','Aggiungi Libro',1200,500); return false;" runat="server"></asp:Button>
+                    <asp:Button
+                        type="button"
+                        ID="Button2"
+                        CssClass="btn-custom"
+                        Text="+"
+                        OnClientClick="BiblionetMainWindow.openDialog('#dialog-scambio','/AddBook.aspx','Aggiungi Libro',1200,500); return false;"
+                        runat="server" />
 
-                    </div>
                 </div>
 
             </div>
+
+
+
+
         </div>
+
+        <div class="d-flex justify-content-center gap-2" style="width: 100%">
+
+            <div id="whislist" class=" d-flex p-2 flex-column">
+                <div class="d-flex flex-column gap-3 p-3 w-100">
+
+                    <div class="title w-100 text-center">
+                        RESERVED BOOKS
+                        <hr />
+
+                        <asp:GridView id="GrdReservedBooks" runat="server">
+
+
+                        </asp:GridView>
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+            <div id="favouriteAuthor" class=" d-flex p-2 flex-column">
+                <div class="d-flex flex-column gap-3 p-3 w-100">
+                    <div class="title w-100 text-center">
+                        FAVOURITE AUTHORS
+                         <hr />
+
+                        <asp:GridView ID="GrdFavouriteAuthor" runat="server">
+
+                        </asp:GridView>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+        </div>
+
 
     </div>
 
-    <asp:Panel ID="PnlImport" runat="server">
-        <div class="d-flex w-100 p-2 gap-4 flex-column align-items-center ">
-
-            <div id="import" class=" d-flex p-2 flex-column" style="width: 95%">
-                <h1>IMPORT</h1>
-
-
-
-                <div class="d-flex flex-column gap-2">
-
-                    <asp:Label Text="Inserisci una categoria" runat="server" /> 
-                    <div class="d-flex gap-2">
-                                            <asp:TextBox ID="TxtCategories" CssClass="form-control"  placeholder="science..." runat="server" />
-                        <asp:Button Text="Importa valori" CssClass="btn btn-dark" ID="BtnImportBook" runat="server" />
-
-                    </div>
-                    <small>Importa i libri da openlibrary </small>
-
-                </div>
-
-
-
-                <div class="d-flex flex-column mt-3">
-
-                    <asp:Button Text="Elimina Duplicati" ID="BtnDeleteDuplicates" CssClass="btn btn-dark" runat="server" />
-                    <small>Elimina tutti i duplicati</small>
-                </div>
-
-
-                <div class="d-flex flex-column mt-3">
-
-                    <asp:Button Text="INSERT INTO Author" ID="BtnAddAuthor" CssClass="btn btn-dark" runat="server" />
-                    <small>Inserisce tutti gli autori da booksopenlibrary a authors </small>
-                </div>
-
-            </div>
-        </div>
-    </asp:Panel>
 
 
 
 
-    <asp:Button ID="BtnReload" runat="server" Text="Button" CssClass="btn btn-primary" Visible="False" />
 
 </asp:Content>

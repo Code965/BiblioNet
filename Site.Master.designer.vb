@@ -23,6 +23,15 @@ Partial Public Class SiteMaster
     Protected WithEvents BtnRegister As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
+    '''Controllo BtnGlobalSearch.
+    '''</summary>
+    '''<remarks>
+    '''Campo generato automaticamente.
+    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
+    '''</remarks>
+    Protected WithEvents BtnGlobalSearch As Global.System.Web.UI.WebControls.TextBox
+
+    '''<summary>
     '''Controllo btnDropDown.
     '''</summary>
     '''<remarks>

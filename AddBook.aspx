@@ -5,8 +5,17 @@
 
     <script>
 
+        var BilionetMainWindov = window;
 
+        $(document).ready(function () {
+
+        });
+
+
+    
     </script>
+    <script src="/Scripts/js/Default.js"></script>
+
 
     <div class="row">
 
@@ -44,13 +53,12 @@
                 <asp:ListItem Value="2" Text="Categoria 2" />
             </asp:DropDownList>
 
-                        <asp:TextBox ID="TxtGenre" CssClass="form-control" placeholder="Inserisci il genere..." runat="server" />
+            <asp:TextBox ID="TxtGenre" CssClass="form-control" placeholder="Inserisci il genere..." runat="server" />
 
         </div>
 
         <div class="w-100 d-flex justify-content-end">
-                    <asp:Button CssClass="btn btn-dark mt-2" ID="BtnSubmitBook" Width="200" Text="Invia" runat="server" />
-
+            <asp:Button CssClass="btn btn-dark mt-2" ID="BtnSubmitBook" Width="200" Text="Invia" runat="server" />
         </div>
 
     </div>

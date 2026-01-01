@@ -46,6 +46,92 @@
             </Scripts>
         </asp:ScriptManager>
 
+        <style>
+            /* Stile base popup */
+.custom-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    pointer-events: none; /* eviti click prima che sia visibile */
+}
+
+/* Popup nascosto */
+.custom-popup.hidden {
+    display: none;
+}
+
+/* Contenuto popup con animazione e shadow */
+.popup-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 16px; /* border radius più grande */
+    max-width: 600px;    /* più largo */
+    width: 90%;          /* responsivo */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3); /* ombra */
+    transform: scale(0.5); /* piccolo all’inizio */
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease; /* animazione */
+}
+
+/* Quando popup visibile */
+.custom-popup.show .popup-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Titolo e testo */
+#confirm-popup-title,
+#message-popup-title {
+    margin-top: 0;
+    font-size: 1.5rem;
+}
+
+#confirm-popup-text,
+#message-popup-text {
+    font-size: 1rem;
+    margin: 1em 0;
+}
+
+/* Pulsanti */
+.popup-actions button,
+#message-popup-close {
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+
+.popup-actions button:hover,
+#message-popup-close:hover {
+    transform: scale(1.05);
+}
+
+/* Icone messaggi */
+#message-popup-icon img {
+    width: 60px;
+    height: 60px;
+    display: block;
+    margin: 0 auto 15px auto;
+}
+
+
+
+        </style>
+
+
+
+        <script>
+            var BiblionetMainWindow = window;
+
+            $(document).ready(function () {
+            });
+        </script>
+        <script src="/Scripts/js/Default.js"></script>
 
 
         <div class="container-fluid p-3">
@@ -53,12 +139,46 @@
 
             <asp:ContentPlaceHolder ID="SecondContent"  runat="server">
 
-             
-
-
-
             </asp:ContentPlaceHolder>
         </div>
+
+         <!-- POPUP DI MESSAGGIO -->
+        <div id="message-popup" class="custom-popup hidden">
+            <div class="popup-content">
+<%--                <span id="message-popup-close">&times;</span>--%>
+
+                <div id="message-popup-icon"></div>
+                <h5 id="message-popup-title" class="text-center"></h5>
+                <p id="message-popup-text" class="text-center"></p>
+                <div class="w-100 d-flex justify-content-end">
+                    <button type="button" id="BtnOk" onclick="BiblionetMainWindow.ClosePopup();" class="btn btn-primary">
+                        Ok
+                    </button>
+                </div>
+              
+
+            </div>
+
+        </div>
+
+        <!-- POPUP DI CONFERMA -->
+        <div id="confirm-popup" class="custom-popup hidden">
+            <div class="popup-content">
+                <h5 id="confirm-popup-title"></h5>
+                <p id="confirm-popup-text"></p>
+
+                <div class="popup-actions">
+                    <button type="button" id="confirm-popup-cancel" class="btn btn-secondary">
+                        Annulla
+                    </button>
+                    <button type="button" id="confirm-popup-confirm" class="btn btn-danger">
+                        Conferma
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
 
     </form>
 

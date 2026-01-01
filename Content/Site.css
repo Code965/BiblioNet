@@ -40,6 +40,8 @@ textarea {
 }
 
 
+
+
 /*LOGO*/
 #Logo {
     background-color: var(--primary-900) !important;
@@ -69,6 +71,24 @@ ul {
 .sidebar {
     background-color: var(--primary-900) !important;
 }
+
+/* Li della sidebar */
+
+#nav-list .nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.orange-box {
+    width: 10px;
+    height: 40px;
+    background-color: var(--accent-600);
+    margin-right: 10px;
+    border-radius: 2px;
+}
+
 
 #nav-list {
 }
@@ -138,6 +158,24 @@ ul {
     width: 95%;
     border: 1px solid var(--glass);
 }
+
+#whislist {
+    border-radius: 5px;
+    height: auto;
+    background-color: white;
+    width: 45%;
+    border: 1px solid var(--glass);
+}
+
+#favouriteAuthor {
+    border-radius: 5px;
+    height: auto;
+    background-color: white;
+    width: 49.5%;
+    border: 1px solid var(--glass);
+}
+
+
 
 #import {
     border-radius: 5px;
@@ -317,12 +355,13 @@ ul {
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: 123%;
-    left: -50px;
+    top: 100%; /* sotto al bottone */
+    left: 0;
     background: white;
     border: 1px solid #ccc;
-    border-radius Defines the radii of the outer border edge. Widely available across major browsers (Baseline since January 2018) Learn more Don't show : 5px; min-width: 160px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    min-width: 160px;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
     z-index: 1000;
 }
 

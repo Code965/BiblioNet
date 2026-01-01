@@ -11,104 +11,95 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class _Default
+Partial Public Class BiblionetImport
 
     '''<summary>
-    '''Controllo litProgress.
+    '''Controllo PnlImport.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents litProgress As Global.System.Web.UI.WebControls.Literal
+    Protected WithEvents PnlImport As Global.System.Web.UI.WebControls.Panel
 
     '''<summary>
-    '''Controllo BtnMonthBook.
+    '''Controllo TxtCategories.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnMonthBook As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents TxtCategories As Global.System.Web.UI.WebControls.TextBox
 
     '''<summary>
-    '''Controllo TxtSearchBook.
+    '''Controllo BtnImportBook.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents TxtSearchBook As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents BtnImportBook As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Controllo BtnApply.
+    '''Controllo BtnImportBooks.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnApply As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents BtnImportBooks As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Controllo RptExchange.
+    '''Controllo BtnAddJsonDate.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents RptExchange As Global.System.Web.UI.WebControls.Repeater
+    Protected WithEvents BtnAddJsonDate As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Controllo BtnOpenDialogBook.
+    '''Controllo BtnAddOnOpenLibraryEditionDetails.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnOpenDialogBook As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents BtnAddOnOpenLibraryEditionDetails As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Controllo TxtSearchBookOnSell.
+    '''Controllo BtnAddressByOpenStreetMap.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents TxtSearchBookOnSell As Global.System.Web.UI.WebControls.TextBox
+    Protected WithEvents BtnAddressByOpenStreetMap As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Controllo BtnApplyOnSell.
+    '''Controllo BtnDeleteDuplicates.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents BtnApplyOnSell As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents BtnDeleteDuplicates As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Controllo Button2.
+    '''Controllo BtnAddAuthor.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents Button2 As Global.System.Web.UI.WebControls.Button
+    Protected WithEvents BtnAddAuthor As Global.System.Web.UI.WebControls.Button
 
     '''<summary>
-    '''Controllo GrdReservedBooks.
+    '''Controllo BtnAddNamePublisher.
     '''</summary>
     '''<remarks>
     '''Campo generato automaticamente.
     '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
     '''</remarks>
-    Protected WithEvents GrdReservedBooks As Global.System.Web.UI.WebControls.GridView
-
-    '''<summary>
-    '''Controllo GrdFavouriteAuthor.
-    '''</summary>
-    '''<remarks>
-    '''Campo generato automaticamente.
-    '''Per la modifica, spostare la dichiarazione di campo dal file di progettazione al file code-behind.
-    '''</remarks>
-    Protected WithEvents GrdFavouriteAuthor As Global.System.Web.UI.WebControls.GridView
+    Protected WithEvents BtnAddNamePublisher As Global.System.Web.UI.WebControls.Button
 End Class
